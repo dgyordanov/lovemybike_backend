@@ -1,5 +1,9 @@
 package com.livemybike.shop.service;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -9,47 +13,16 @@ import java.time.LocalDate;
  *
  * @author Diyan Yordanov
  */
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class OfferDTO {
 
+    private long id;
     // TODO: make a Money value object
     private BigDecimal price;
-
-    private String model;
-
-    private LocalDate constructionDate;
-
-    // TODO: address value object
-    private String address;
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public LocalDate getConstructionDate() {
-        return constructionDate;
-    }
-
-    public void setConstructionDate(LocalDate constructionDate) {
-        this.constructionDate = constructionDate;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
+    private String title;
+    private String imageUrl;
+    private String description;
+    private String gender;
 }
