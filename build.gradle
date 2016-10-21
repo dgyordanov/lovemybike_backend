@@ -16,6 +16,7 @@ repositories {
 }
 
 dependencies {
+    compileOnly("org.projectlombok:lombok:1.16.10")
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.modelmapper:modelmapper:0.7.5")
     testCompile("junit:junit")
@@ -31,5 +32,5 @@ jar {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.5'
+    gradleVersion = '2.13'
 }
