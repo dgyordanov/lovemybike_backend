@@ -1,0 +1,62 @@
+body {
+	padding-top: 50px;
+}
+
+
+
+.navbar {
+	margin-bottom: 0;
+}
+
+
+.bike-section-image {
+	background: center center url('../img/top.jpg') no-repeat;
+	background-size: cover;
+	
+}
+
+.location-box {
+    background-color: rgba(255,255,255,0.8);
+    padding: 40px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.location-form-button {
+	margin-top: 25px;
+}
+
+.footer{
+	background-color: #f7f7f7;
+}
+
+
+.margin-top-15 {
+	margin-top: 15px;
+}
+
+.margin-20 {
+	margin: 20px;
+}
+
+.carousel-inner{
+  width:100%;
+  max-width:640px;
+  max-height:300px;
+}
+
+.carousel{
+    padding: 0px;
+}
+
+.carousel-inner > .item > img {
+    margin: 0 auto;
+}
+
+.dl-horizontal dt {
+    width: 80px;
+}
+
+.dl-horizontal dd {
+    margin-left: 90px;
+}
