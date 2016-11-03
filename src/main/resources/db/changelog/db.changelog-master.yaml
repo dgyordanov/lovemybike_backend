@@ -39,3 +39,31 @@ databaseChangeLog:
                   type: varchar(255)
                   constraints:
                     nullable: false
+
+  - changeSet:
+      id: 2
+      author: Diyan Yordanov
+      changes:
+          - loadData:
+              encoding: UTF-8
+              file: db/offers.csv
+              tableName: offers
+              columns:
+                  - column:
+                      name: id
+                      type: NUMERIC
+                  - column:
+                      name: price
+                      type: NUMERIC
+                  - column:
+                      name: title
+                      type: STRING
+                  - column:
+                      name: imageUrl
+                      type: STRING
+                  - column:
+                      name: description
+                      type: STRING
+                  - column:
+                      name: gender
+                      type: STRING
