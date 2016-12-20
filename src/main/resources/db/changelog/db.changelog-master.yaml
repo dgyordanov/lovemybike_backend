@@ -83,7 +83,7 @@ databaseChangeLog:
                           primaryKey: true
                           nullable: false
                   - column:
-                      name: username
+                      name: email
                       type: varchar(255)
                       constraints:
                           nullable: false
@@ -106,7 +106,7 @@ databaseChangeLog:
                       name: id
                       type: NUMERIC
                   - column:
-                      name: username
+                      name: email
                       type: STRING
                   - column:
                       name: password

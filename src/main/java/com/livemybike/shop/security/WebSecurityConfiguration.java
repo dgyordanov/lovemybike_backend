@@ -17,7 +17,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
 
     @Autowired
-    AccountRepo accountRepository;
+    private AccountRepo accountRepository;
 
     @Override
     public void init(AuthenticationManagerBuilder auth) throws Exception {
@@ -29,9 +29,9 @@ class WebSecurityConfiguration extends GlobalAuthenticationConfigurerAdapter {
         return new UserDetailsService() {
             @Override
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                Account account = accountRepository.findByUsername(username);
+                Account account = accountRepository.findByEmail(username);
                 if (account != null) {
-                    return new User(account.getUsername(), account.getPassword(), true, true, true, true,
+                    return new User(account.getEmail(), account.getPassword(), true, true, true, true,
                             AuthorityUtils.createAuthorityList("USER"));
                 } else {
                     throw new UsernameNotFoundException("could not find the user '"
