@@ -1,20 +1,21 @@
 package com.livemybike.shop.entities;
 
+import javax.persistence.*;
+
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-@Entity
 @Data
+@Entity
 public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
+
+    @Column(unique = true, nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String password;
 
 }
