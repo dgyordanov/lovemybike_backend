@@ -2,7 +2,10 @@ body {
 	padding-top: 50px;
 }
 
-
+div.required label.control-label:after {
+    content: " *";
+    color: red;
+}
 
 .navbar {
 	margin-bottom: 0;
@@ -59,4 +62,8 @@ body {
 
 .dl-horizontal dd {
     margin-left: 90px;
+}
+
+.btn-space {
+    margin: 5px;
 }
