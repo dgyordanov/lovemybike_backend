@@ -17,13 +17,20 @@ import java.io.IOException;
 @Configuration
 class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private static final String[] UNRESTRICTED_URIS = new String[] {
+            "/", "/console/**", "/offers", "/account", "/assets/**", "/css/**", "/img/**"
+    };
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().anyRequest().fullyAuthenticated().and().
-                httpBasic().authenticationEntryPoint(new AuthenticationEntryPoint() {
+        http
+                .authorizeRequests()
+                .antMatchers(UNRESTRICTED_URIS).permitAll()
+                .anyRequest().fullyAuthenticated()
+                .and()
+                .httpBasic().authenticationEntryPoint(new AuthenticationEntryPoint() {
             @Override
-            public void commence(HttpServletRequest request, HttpServletResponse response
-                    , AuthenticationException authException) throws IOException, ServletException {
+            public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
                 String requestedBy = request.getHeader("X-Requested-By");
                 if (requestedBy == null || requestedBy.isEmpty()) {
                     HttpServletResponse httpResponse = (HttpServletResponse) response;
@@ -36,13 +43,6 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 }
             }
         }).and().csrf().disable();
-    }
-
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web
-                .ignoring()
-                .antMatchers("/console/**", "/offers", "/account");
     }
 
 }
