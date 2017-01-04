@@ -24,7 +24,7 @@ import static org.junit.Assert.assertThat;
 public class OffersControllerTest {
 
     public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-    private static final String BASE_URL = "http://localhost:8080/offers";
+    private static final String BASE_URL = "http://localhost:9000/offers";
     private RestTemplate template = new TestRestTemplate();
 
     @Test
