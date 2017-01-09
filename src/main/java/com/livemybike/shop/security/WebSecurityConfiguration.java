@@ -1,7 +1,5 @@
 package com.livemybike.shop.security;
 
-import com.livemybike.shop.entities.Account;
-import com.livemybike.shop.repos.AccountRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,6 +1,6 @@
-package com.livemybike.shop.repos;
+package com.livemybike.shop.offers;
 
-import com.livemybike.shop.entities.Offer;
+import com.livemybike.shop.offers.Offer;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Collection;

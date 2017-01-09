@@ -1,6 +1,5 @@
-package com.livemybike.shop.repos;
+package com.livemybike.shop.security;
 
-import com.livemybike.shop.entities.Account;
 import org.springframework.data.repository.CrudRepository;
 
 public interface AccountRepo extends CrudRepository<Account, String> {

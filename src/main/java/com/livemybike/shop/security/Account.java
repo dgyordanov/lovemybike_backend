@@ -1,4 +1,4 @@
-package com.livemybike.shop.entities;
+package com.livemybike.shop.security;
 
 import javax.persistence.*;
 
