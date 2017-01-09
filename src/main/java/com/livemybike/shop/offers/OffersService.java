@@ -1,9 +1,11 @@
 package com.livemybike.shop.offers;
 
+import java.util.List;
+
 public interface OffersService {
 
-    Iterable<Offer> listOffers(String genderFilter);
+    List<OfferDto> listOffers(String genderFilter);
 
-    Offer createOffer(Offer offerDto);
+    OfferDto createOffer(Offer offerDto);
 
 }

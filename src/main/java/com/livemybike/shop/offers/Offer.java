@@ -1,5 +1,6 @@
 package com.livemybike.shop.offers;
 
+import com.livemybike.shop.security.Account;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -19,5 +20,9 @@ public class Offer {
     private String imageUrl;
     private String description;
     private String gender;
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="account_id")
+    private Account owner;
 
 }

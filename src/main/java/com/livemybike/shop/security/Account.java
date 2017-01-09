@@ -6,11 +6,12 @@ import lombok.Data;
 
 @Data
 @Entity
+@Table(name = "accounts")
 public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private Long id;
 
     @Column(unique = true, nullable = false)
     private String email;

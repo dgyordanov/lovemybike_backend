@@ -15,6 +15,12 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
+                  name: account_id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+              - column:
                   name: price
                   type: decimal
                   constraints:
@@ -73,7 +79,7 @@ databaseChangeLog:
       author: Diyan Yordanov
       changes:
           - createTable:
-              tableName: account
+              tableName: accounts
               columns:
                   - column:
                       name: id
@@ -101,7 +107,7 @@ databaseChangeLog:
           - loadData:
               encoding: UTF-8
               file: db/users.csv
-              tableName: account
+              tableName: accounts
               columns:
                   - column:
                       name: id
@@ -112,3 +118,18 @@ databaseChangeLog:
                   - column:
                       name: password
                       type: STRING
+
+
+  - changeSet:
+      id: 5
+      author: Diyan Yordanov
+      changes:
+          - addForeignKeyConstraint:
+              baseColumnNames: account_id
+              baseTableName: offers
+              constraintName: fk_address_person
+              onDelete: CASCADE
+              onUpdate: RESTRICT
+              referencedColumnNames: id
+              referencedTableName: accounts
+
