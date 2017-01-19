@@ -15,6 +15,12 @@ repositories {
     mavenCentral()
 }
 
+dependencyManagement {
+    imports {
+        mavenBom 'com.amazonaws:aws-java-sdk-bom:1.10.77'
+    }
+}
+
 dependencies {
     compileOnly("org.projectlombok:lombok:1.16.10")
     compile("org.springframework.boot:spring-boot-starter")
@@ -24,6 +30,7 @@ dependencies {
     compile("org.liquibase:liquibase-core")
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.modelmapper:modelmapper:0.7.5")
+    compile("com.amazonaws:aws-java-sdk-s3")
     runtime("com.h2database:h2")
     testCompile("junit:junit")
     testCompile("org.springframework:spring-test:4.2.5.RELEASE")
