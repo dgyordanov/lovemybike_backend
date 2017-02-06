@@ -37,21 +37,32 @@ public class OffersController {
 //    }
 
     @RequestMapping(value="", method=POST)
-    public @ResponseBody String postOffer(@RequestParam("name") String name,
-                            @RequestParam("file") MultipartFile file){
-        if (!file.isEmpty()) {
+    public @ResponseBody String postOffer(
+            @RequestParam("title") String title,
+            @RequestParam("price") String price,
+            // TODO: required when fix the redux-form select input
+            @RequestParam(value = "gender", required = false) String gender,
+            @RequestParam("description") String description,
+            @RequestParam("image0") MultipartFile image0,
+            @RequestParam(value = "image1", required = false) MultipartFile image1,
+            @RequestParam(value = "image2", required = false) MultipartFile image2,
+            @RequestParam(value = "image3", required = false) MultipartFile image3,
+            @RequestParam(value = "image4", required = false) MultipartFile image4,
+            @RequestParam(value = "image5", required = false) MultipartFile image5) {
+
+        if (!image0.isEmpty()) {
             try {
-                byte[] bytes = file.getBytes();
-                // TODO: resize the image
+                byte[] bytes = image0.getBytes();
+                // TODO: resize the image - small and medium images
                 // TODO: upload to AWS - S3
                 // TODO: save the offer in the DB
                 // TODO: return the created offer with the ID
-                return "You successfully uploaded " + name + "!";
+                return "You successfully uploaded " + title + "!";
             } catch (IOException e) {
-                return "You failed to upload " + name + " => " + e.getMessage();
+                return "You failed to upload " + title + " => " + e.getMessage();
             }
         } else {
-            return "You failed to upload " + name + " because the file was empty.";
+            return "You failed to upload " + title + " because the file was empty.";
         }
     }
 
