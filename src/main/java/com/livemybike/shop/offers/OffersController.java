@@ -40,8 +40,7 @@ public class OffersController {
     public @ResponseBody String postOffer(
             @RequestParam("title") String title,
             @RequestParam("price") String price,
-            // TODO: required when fix the redux-form select input
-            @RequestParam(value = "gender", required = false) String gender,
+            @RequestParam(value = "gender") String gender,
             @RequestParam("description") String description,
             @RequestParam("image0") MultipartFile image0,
             @RequestParam(value = "image1", required = false) MultipartFile image1,
