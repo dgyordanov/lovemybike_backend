@@ -18,7 +18,7 @@ import java.io.IOException;
 class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] UNRESTRICTED_URIS = new String[] {
-            "/", "/console/**", "/offers", "/account", "/assets/**", "/css/**", "/img/**"
+            "/", "/console/**", "/offers", "/account", "/assets/**", "/css/**", "/img/**", "/favicon.ico"
     };
 
     @Override
@@ -42,7 +42,7 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
                 }
             }
-        }).and().csrf().disable();
+        }).and().csrf().disable().headers().frameOptions().disable();
     }
 
 }
