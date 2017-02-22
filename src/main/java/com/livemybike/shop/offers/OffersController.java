@@ -31,6 +31,11 @@ public class OffersController {
         return offerService.listOffers(genderFilter);
     }
 
+    @RequestMapping(value = "/@my", method = GET, produces = APPLICATION_JSON_VALUE)
+    public List<OfferDto> readMyOffers() {
+        return offerService.listMyOffers();
+    }
+
 //    @RequestMapping(value = "", method = POST, produces = APPLICATION_JSON_VALUE)
 //    public OfferDto postOffer(@RequestBody Offer offer) {
 //        return offerService.createOffer(offer);

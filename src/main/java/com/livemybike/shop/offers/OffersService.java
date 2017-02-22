@@ -8,4 +8,5 @@ public interface OffersService {
 
     OfferDto createOffer(Offer offerDto);
 
+    List<OfferDto> listMyOffers();
 }

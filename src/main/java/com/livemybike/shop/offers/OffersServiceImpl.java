@@ -50,13 +50,26 @@ public class OffersServiceImpl implements OffersService {
         }
 
         User authIdentity = (User) user.getPrincipal();
-        authIdentity.getUsername();
         Account loggedInAccount = accountRepo.findByEmail(authIdentity.getUsername());
         offer.setOwner(loggedInAccount);
 
         Offer result = offersRepo.save(offer);
 
         return convertToDto(result);
+    }
+
+    @Override
+    public List<OfferDto> listMyOffers() {
+        Authentication user = SecurityContextHolder.getContext().getAuthentication();
+        if (user instanceof AnonymousAuthenticationToken) {
+            throw new AnonymousAuthNotAllowedException(
+                    "User should be logged in before to post an offer");
+        }
+
+        User authIdentity = (User) user.getPrincipal();
+        Account loggedInAccount = accountRepo.findByEmail(authIdentity.getUsername());
+        List<Offer> offers = offersRepo.findByOwner(loggedInAccount);
+        return convertToDtoList(offers);
     }
 
     private List<OfferDto> convertToDtoList(Iterable<Offer> offers) {
