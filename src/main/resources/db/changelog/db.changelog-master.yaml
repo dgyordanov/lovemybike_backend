@@ -44,7 +44,27 @@ databaseChangeLog:
                   name: gender
                   type: varchar(255)
                   constraints:
-                    nullable: false
+                      nullable: false
+              - column:
+                  name: street
+                  type: varchar(255)
+                  constraints:
+                      nullable: false
+              - column:
+                  name: number
+                  type: varchar(255)
+                  constraints:
+                      nullable: false
+              - column:
+                  name: postcode
+                  type: varchar(255)
+                  constraints:
+                      nullable: false
+              - column:
+                  name: city
+                  type: varchar(255)
+                  constraints:
+                      nullable: false
 
   - changeSet:
       id: 2

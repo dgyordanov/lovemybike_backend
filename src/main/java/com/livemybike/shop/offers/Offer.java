@@ -20,6 +20,10 @@ public class Offer {
     private String imageUrl;
     private String description;
     private String gender;
+    private String street;
+    private String number;
+    private String postcode;
+    private String city;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="account_id")

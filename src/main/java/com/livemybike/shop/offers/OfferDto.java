@@ -14,4 +14,8 @@ public class OfferDto {
     private String description;
     private String gender;
     private Long owner_id;
+    private String street;
+    private String number;
+    private String postcode;
+    private String city;
 }
