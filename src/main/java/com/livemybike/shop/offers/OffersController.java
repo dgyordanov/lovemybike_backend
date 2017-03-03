@@ -27,8 +27,10 @@ public class OffersController {
     private OffersService offerService;
 
     @RequestMapping(value = "", method = GET, produces = APPLICATION_JSON_VALUE)
-    public List<OfferDto> read(@RequestParam(value = "gender", required = false) String genderFilter) {
-        return offerService.listOffers(genderFilter);
+    public List<OfferDto> read(
+            @RequestParam(value = "gender", required = false) String genderFilter,
+            @RequestParam(value = "location", required = false) String location) {
+        return offerService.listOffers(genderFilter, location);
     }
 
     @RequestMapping(value = "/@my", method = GET, produces = APPLICATION_JSON_VALUE)

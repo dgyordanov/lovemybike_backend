@@ -29,16 +29,29 @@ public class OffersServiceImpl implements OffersService {
     private ModelMapper modelMapper;
 
     @Override
-    public List<OfferDto> listOffers(String genderFilter) {
-        if (StringUtils.isEmpty(genderFilter)) {
+    public List<OfferDto> listOffers(String genderFilter, String location) {
+        // TODO: find a way to build a dynamic criteria
+        if (StringUtils.isEmpty(genderFilter) && StringUtils.isEmpty(location)) {
             // Not filter passed. Return everything.
             return convertToDtoList(offersRepo.findAll());
-        } else {
-            List<String> filters = genderFilter.chars()
-                    .mapToObj(c -> String.valueOf((char) c))
-                    .collect(Collectors.toList());
+        } else if (!StringUtils.isEmpty(genderFilter) && StringUtils.isEmpty(location)) {
+            // only gender filter passed
+            List<String> filters = getGenderFiltersList(genderFilter);
             return convertToDtoList(offersRepo.findByGenderIn(filters));
+        } else if (StringUtils.isEmpty(genderFilter) && !StringUtils.isEmpty(location)) {
+            // only location filter passed
+            return convertToDtoList(offersRepo.findByCityIgnoreCaseOrPostcodeIgnoreCase(location, location));
+        } else {
+            // location and gender filter passed
+            List<String> filters = getGenderFiltersList(genderFilter);
+            return convertToDtoList(offersRepo.findByGenderAndLocation(filters, location));
         }
+    }
+
+    private List<String> getGenderFiltersList(String genderFilter) {
+        return genderFilter.chars()
+                        .mapToObj(c -> String.valueOf((char) c))
+                        .collect(Collectors.toList());
     }
 
     @Override
