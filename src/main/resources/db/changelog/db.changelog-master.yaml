@@ -31,10 +31,25 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: imageUrl
+                  name: image0
                   type: varchar(255)
                   constraints:
                     nullable: false
+              - column:
+                  name: image1
+                  type: varchar(255)
+              - column:
+                  name: image2
+                  type: varchar(255)
+              - column:
+                  name: image3
+                  type: varchar(255)
+              - column:
+                  name: image4
+                  type: varchar(255)
+              - column:
+                  name: image5
+                  type: varchar(255)
               - column:
                   name: description
                   type: varchar(255)
@@ -85,7 +100,7 @@ databaseChangeLog:
                       name: title
                       type: STRING
                   - column:
-                      name: imageUrl
+                      name: image0
                       type: STRING
                   - column:
                       name: description
@@ -138,7 +153,6 @@ databaseChangeLog:
                   - column:
                       name: password
                       type: STRING
-
 
   - changeSet:
       id: 5

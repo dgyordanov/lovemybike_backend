@@ -1,4 +1,4 @@
-id,account_id,price,title,imageUrl,description,gender,street,number,postcode,city
+id,account_id,price,title,image0,description,gender,street,number,postcode,city
 1,1,24.99,Haibaike big curve,./img/offer_1.jpg,Short description of this bike which should be at most this size 3-4 rows,m,Breitkopfstrasse,75,13409,Berlin
 2,1,24.99,Haibaike big curve,./img/offer_2.jpg,Short description of this bike which should be at most this size 3-4 rows,w,Kastanienallee,23,13158,Berlin
 3,1,24.99,Haibaike big curve,./img/offer_3.jpg,Short description of this bike which should be at most this size 3-4 rows,w,Kastanienallee,23,13158,Berlin

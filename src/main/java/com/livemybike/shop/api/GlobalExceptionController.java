@@ -1,5 +1,6 @@
 package com.livemybike.shop.api;
 
+import com.livemybike.shop.offers.ImageStoringException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -24,6 +25,11 @@ public class GlobalExceptionController {
 
     }
 
+    @ExceptionHandler(ImageStoringException.class)
+    public ResponseEntity<Error> handleImageStoringException(ImageStoringException e) {
+        return new ResponseEntity(new Error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+
+    }
 }
 
 @Data
