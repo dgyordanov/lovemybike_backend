@@ -1,20 +1,22 @@
 package com.livemybike.shop.offers;
 
 import java.util.Collection;
-import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.livemybike.shop.security.Account;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 
-public interface OffersRepo extends CrudRepository<Offer, Long> {
+public interface OffersRepo extends JpaRepository<Offer, Long> {
 
-    List<Offer> findByGenderIn(Collection<String> genders);
+    Page<Offer> findByGenderIn(Collection<String> genders, Pageable pageRequest);
 
-    List<Offer> findByOwner(Account owner);
+    Page<Offer> findByOwner(Account owner, Pageable pageRequest);
 
-    Iterable<Offer> findByCityIgnoreCaseOrPostcodeIgnoreCase(String location, String location1);
+    Page<Offer> findByCityIgnoreCaseOrPostcodeIgnoreCase(String location, String postcode, Pageable pageRequest);
 
     @Query(("SELECT o FROM Offer o WHERE o.gender in ?1 AND (LOWER(o.city) = LOWER(?2) OR LOWER(o.postcode) = LOWER(?2))"))
-    Iterable<Offer> findByGenderAndLocation(Collection<String> genders, String location);
+    Page<Offer> findByGenderAndLocation(Collection<String> genders, String location, Pageable pageRequest);
 }

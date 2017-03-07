@@ -1,17 +1,16 @@
 package com.livemybike.shop.offers;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
-
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * Rest controller which exposes offers endpoints.
@@ -26,15 +25,16 @@ public class OffersController {
     private OffersService offerService;
 
     @RequestMapping(value = "", method = GET, produces = APPLICATION_JSON_VALUE)
-    public List<OfferDto> read(
+    public Page<OfferDto> read(
             @RequestParam(value = "gender", required = false) String genderFilter,
-            @RequestParam(value = "location", required = false) String location) {
-        return offerService.listOffers(genderFilter, location);
+            @RequestParam(value = "location", required = false) String location,
+            @RequestParam(value = "pageNumber", required = true) int pageNumber) {
+        return offerService.listOffers(genderFilter, location, pageNumber);
     }
 
     @RequestMapping(value = "/@my", method = GET, produces = APPLICATION_JSON_VALUE)
-    public List<OfferDto> readMyOffers() {
-        return offerService.listMyOffers();
+    public Page<OfferDto> readMyOffers(@RequestParam(value = "pageNumber", required = true) int pageNumber) {
+        return offerService.listMyOffers(pageNumber);
     }
 
     @RequestMapping(value="", method=POST, produces = APPLICATION_JSON_VALUE)

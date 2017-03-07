@@ -1,24 +1,5 @@
 package com.livemybike.shop.offers;
 
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.livemybike.shop.security.Account;
-import com.livemybike.shop.security.AccountRepo;
-import com.livemybike.shop.security.AnonymousAuthNotAllowedException;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -28,7 +9,30 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+
+import javax.imageio.ImageIO;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.livemybike.shop.security.Account;
+import com.livemybike.shop.security.AccountRepo;
+import com.livemybike.shop.security.AnonymousAuthNotAllowedException;
 
 @Service
 public class OffersServiceImpl implements OffersService {
@@ -42,6 +46,8 @@ public class OffersServiceImpl implements OffersService {
     private static final int IMG_HEIGHT_SMALL = 200;
     private static final int IMG_HEIGHT_MEDIUM = 800;
 
+    private static final int PAGE_SIZE = 12;
+
     @Autowired
     private OffersRepo offersRepo;
 
@@ -52,22 +58,22 @@ public class OffersServiceImpl implements OffersService {
     private ModelMapper modelMapper;
 
     @Override
-    public List<OfferDto> listOffers(String genderFilter, String location) {
+    public Page<OfferDto> listOffers(String genderFilter, String location, int pageNumber) {
         // TODO: find a way to build a dynamic criteria
         if (StringUtils.isEmpty(genderFilter) && StringUtils.isEmpty(location)) {
             // Not filter passed. Return everything.
-            return convertToDtoList(offersRepo.findAll());
+            return convertToDtoList(offersRepo.findAll(getPage(pageNumber)));
         } else if (!StringUtils.isEmpty(genderFilter) && StringUtils.isEmpty(location)) {
             // only gender filter passed
             List<String> filters = getGenderFiltersList(genderFilter);
-            return convertToDtoList(offersRepo.findByGenderIn(filters));
+            return convertToDtoList(offersRepo.findByGenderIn(filters, getPage(pageNumber)));
         } else if (StringUtils.isEmpty(genderFilter) && !StringUtils.isEmpty(location)) {
             // only location filter passed
-            return convertToDtoList(offersRepo.findByCityIgnoreCaseOrPostcodeIgnoreCase(location, location));
+            return convertToDtoList(offersRepo.findByCityIgnoreCaseOrPostcodeIgnoreCase(location, location, getPage(pageNumber)));
         } else {
             // location and gender filter passed
             List<String> filters = getGenderFiltersList(genderFilter);
-            return convertToDtoList(offersRepo.findByGenderAndLocation(filters, location));
+            return convertToDtoList(offersRepo.findByGenderAndLocation(filters, location, getPage(pageNumber)));
         }
     }
 
@@ -118,7 +124,7 @@ public class OffersServiceImpl implements OffersService {
     }
 
     @Override
-    public List<OfferDto> listMyOffers() {
+    public Page<OfferDto> listMyOffers(int pageNumber) {
         Authentication user = SecurityContextHolder.getContext().getAuthentication();
         if (user instanceof AnonymousAuthenticationToken) {
             throw new AnonymousAuthNotAllowedException(
@@ -127,14 +133,8 @@ public class OffersServiceImpl implements OffersService {
 
         User authIdentity = (User) user.getPrincipal();
         Account loggedInAccount = accountRepo.findByEmail(authIdentity.getUsername());
-        List<Offer> offers = offersRepo.findByOwner(loggedInAccount);
+        Page<Offer> offers = offersRepo.findByOwner(loggedInAccount, getPage(pageNumber));
         return convertToDtoList(offers);
-    }
-
-    private List<OfferDto> convertToDtoList(Iterable<Offer> offers) {
-        return StreamSupport.stream(offers.spliterator(), false)
-                .map(offer -> convertToDto(offer))
-                .collect(Collectors.toList());
     }
 
     private OfferDto convertToDto(Offer offer) {
@@ -201,4 +201,14 @@ public class OffersServiceImpl implements OffersService {
 
         amazonS3.putObject(S3_BUCKET, offerId + "_" + sizePrefix + "_" + image.getOriginalFilename(), inputStream, meta);
     }
+
+    private PageRequest getPage(int pageNumber) {
+        // TODO: think about cache
+        return new PageRequest(pageNumber - 1, PAGE_SIZE, Sort.Direction.DESC, "id");
+    }
+
+    private Page<OfferDto> convertToDtoList(Page<Offer> offerPage) {
+        return offerPage.map(offer -> convertToDto(offer));
+    }
+
 }
