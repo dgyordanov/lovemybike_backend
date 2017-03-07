@@ -154,8 +154,8 @@ public class OffersServiceImpl implements OffersService {
     }
 
     private void resizeAndStoreToS3(Long offerId, MultipartFile image) {
-        BufferedImage resizedImageSmall = getBufferedImage(image, IMG_HEIGHT_SMALL);
-        BufferedImage resizedImageMedium = getBufferedImage(image, IMG_HEIGHT_MEDIUM);
+        BufferedImage resizedImageSmall = resizeImage(image, IMG_HEIGHT_SMALL);
+        BufferedImage resizedImageMedium = resizeImage(image, IMG_HEIGHT_MEDIUM);
 
         AmazonS3 amazonS3;
         AWSCredentials awsCredentials = new BasicAWSCredentials(S3_ACESS_KEY, S3_SECRET_KEY);
@@ -165,7 +165,7 @@ public class OffersServiceImpl implements OffersService {
         storeToS3(offerId, image, resizedImageMedium, amazonS3, IMAGE_SIZE_PREFIX_MEDIUM);
     }
 
-    private BufferedImage getBufferedImage(MultipartFile image, int IMG_HEIGHT_S) {
+    private BufferedImage resizeImage(MultipartFile image, int IMG_HEIGHT_S) {
         BufferedImage originalImage;
         try {
             originalImage = ImageIO.read(image.getInputStream());
