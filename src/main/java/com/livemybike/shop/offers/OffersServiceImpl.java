@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
 
+import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -160,6 +162,8 @@ public class OffersServiceImpl implements OffersService {
         AmazonS3 amazonS3;
         AWSCredentials awsCredentials = new BasicAWSCredentials(S3_ACESS_KEY, S3_SECRET_KEY);
         amazonS3 = new AmazonS3Client(awsCredentials);
+        Region euFrankfurt = Region.getRegion(Regions.EU_CENTRAL_1);
+        amazonS3.setRegion(euFrankfurt);
 
         storeToS3(offerId, image, resizedImageSmall, amazonS3, IMAGE_SIZE_PREFIX_SMALL);
         storeToS3(offerId, image, resizedImageMedium, amazonS3, IMAGE_SIZE_PREFIX_MEDIUM);
