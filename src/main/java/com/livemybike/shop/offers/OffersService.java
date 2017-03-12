@@ -18,8 +18,7 @@ public interface OffersService {
     Page<OfferDto> listOffers(String genderFilter, String location, int pageNumber);
 
     OfferDto createOffer(String title, String price, String gender, String description, String street,
-                         String number, String postcode, String city, MultipartFile image0, MultipartFile image1,
-                         MultipartFile image2, MultipartFile image3, MultipartFile image4, MultipartFile image5);
+                         String number, String postcode, String city, MultipartFile... image0);
 
     Page<OfferDto> listMyOffers(int pageNumber);
 }

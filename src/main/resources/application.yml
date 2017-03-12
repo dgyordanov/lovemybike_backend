@@ -13,6 +13,11 @@ spring:
 
     jpa.hibernate.ddl-auto: none
 
+aws:
+    s3AccessKey: AKIAJXV23NQFIODDAROQ
+    s3SecretKey: 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
+    s3Bucket: bike-bucket
+
 multipart:
     max-file-size: 5MB
     max-request-size: 100MB

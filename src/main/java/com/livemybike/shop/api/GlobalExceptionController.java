@@ -1,6 +1,6 @@
 package com.livemybike.shop.api;
 
-import com.livemybike.shop.offers.ImageStoringException;
+import com.livemybike.shop.images.ImageStoringException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
