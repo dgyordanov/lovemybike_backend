@@ -1,6 +1,7 @@
 package com.livemybike.shop.images;
 
 import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.services.s3.model.ObjectMetadata;
@@ -37,6 +38,7 @@ public class S3ImageRepo implements ImageRepo {
     }
 
     @Override
+    @Transactional
     public void save(Image image, Long offerId) {
 
         ObjectMetadata meta = new ObjectMetadata();
