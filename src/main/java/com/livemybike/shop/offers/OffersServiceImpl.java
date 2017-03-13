@@ -26,6 +26,8 @@ import com.livemybike.shop.security.Account;
 import com.livemybike.shop.security.AccountRepo;
 import com.livemybike.shop.security.AnonymousAuthNotAllowedException;
 
+import javax.transaction.Transactional;
+
 @Service
 public class OffersServiceImpl implements OffersService {
 
@@ -70,6 +72,7 @@ public class OffersServiceImpl implements OffersService {
     }
 
     @Override
+    @Transactional
     public OfferDto createOffer(String title, String price, String gender, String description, String street,
                                 String number, String postcode, String city, MultipartFile... images) {
         Offer offer = new Offer();

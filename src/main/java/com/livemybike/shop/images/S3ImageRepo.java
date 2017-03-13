@@ -38,7 +38,6 @@ public class S3ImageRepo implements ImageRepo {
     }
 
     @Override
-    @Transactional
     public void save(Image image, Long offerId) {
 
         ObjectMetadata meta = new ObjectMetadata();
