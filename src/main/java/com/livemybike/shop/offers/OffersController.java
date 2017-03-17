@@ -4,13 +4,13 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+import com.livemybike.shop.offers.booking.Booking;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * Rest controller which exposes offers endpoints.
@@ -58,4 +58,11 @@ public class OffersController {
                     number, postcode, city, image0, image1, image2, image3, image4, image5);
             return offerDto;
     }
+
+    @RequestMapping(value = "/{id}/bookings", method = GET, produces = APPLICATION_JSON_VALUE)
+    public List<Booking> readOfferBookings(
+            @PathVariable(value="id") long offerId) {
+        return offerService.getOfferBookings(offerId);
+    }
+
 }

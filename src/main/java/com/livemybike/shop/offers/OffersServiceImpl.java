@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.livemybike.shop.images.ImageStoringException;
+import com.livemybike.shop.offers.booking.Booking;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -127,6 +128,12 @@ public class OffersServiceImpl implements OffersService {
         Account loggedInAccount = accountRepo.findByEmail(authIdentity.getUsername());
         Page<Offer> offers = offersRepo.findByOwner(loggedInAccount, getPage(pageNumber));
         return convertToDtoList(offers);
+    }
+
+    @Override
+    public List<Booking> getOfferBookings(long offerId) {
+        Offer offer = offersRepo.findOne(offerId);
+        return offer.getBookings();
     }
 
     private OfferDto convertToDto(Offer offer) {

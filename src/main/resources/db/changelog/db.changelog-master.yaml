@@ -167,3 +167,63 @@ databaseChangeLog:
               referencedColumnNames: id
               referencedTableName: accounts
 
+  - changeSet:
+      id: 6
+      author: Diyan Yordanov
+      changes:
+        - createTable:
+            tableName: bookings
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: state
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: from
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: to
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: requested_by_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: offer_id
+                  type: int
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 7
+      author: Diyan Yordanov
+      changes:
+          - addForeignKeyConstraint:
+              baseColumnNames: requested_by_id
+              baseTableName: bookings
+              constraintName: fk_booking_requested_by
+              onDelete: CASCADE
+              onUpdate: RESTRICT
+              referencedColumnNames: id
+              referencedTableName: accounts
+          - addForeignKeyConstraint:
+              baseColumnNames: offer_id
+              baseTableName: bookings
+              constraintName: fk_booking_offer
+              onDelete: CASCADE
+              onUpdate: RESTRICT
+              referencedColumnNames: id
+              referencedTableName: offers

@@ -1,5 +1,6 @@
 package com.livemybike.shop.offers.booking;
 
+import com.livemybike.shop.offers.Offer;
 import com.livemybike.shop.security.Account;
 
 import javax.persistence.*;
@@ -9,13 +10,28 @@ import java.util.Date;
 @Table(name = "bookings")
 public class Booking {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Convert(converter = StateJpaConverter.class)
     private AbstractState state;
+
     private Date from;
+
     private Date to;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_id")
+    @JoinColumn(name = "requested_by_id")
     private Account requestedBy;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "offer_id")
+    private Offer offer;
+
+    public Booking() {
+        this.state = State.REQUEST_STATE;
+    }
 
     public State getState() {
         return state;
@@ -47,6 +63,22 @@ public class Booking {
 
     public void setRequestedBy(Account requestedBy) {
         this.requestedBy = requestedBy;
+    }
+
+    public Offer getOffer() {
+        return offer;
+    }
+
+    public void setOffer(Offer offer) {
+        this.offer = offer;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void request() throws InvalidStateTransitionException {

@@ -1,10 +1,12 @@
 package com.livemybike.shop.offers;
 
+import com.livemybike.shop.offers.booking.Booking;
 import com.livemybike.shop.security.Account;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "offers")
@@ -32,5 +34,8 @@ public class Offer {
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="account_id")
     private Account owner;
+
+    @OneToMany(mappedBy="offer")
+    private List<Booking> bookings;
 
 }
