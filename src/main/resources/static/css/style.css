@@ -67,3 +67,7 @@ div.required label.control-label:after {
 .btn-space {
     margin: 5px;
 }
+
+.underline {
+    text-decoration: underline;
+}

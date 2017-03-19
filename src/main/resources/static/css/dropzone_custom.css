@@ -1,0 +1,14 @@
+/* React Filepicker Example CSS */
+
+.filepicker.dropzone .dz-preview.dz-image-preview {
+    background: none;
+}
+
+.filepicker.dropzone .dz-preview.dz-image-preview .dz-image {
+    border-radius: 5px;
+}
+
+/* Dirty hack to hide the progress bar because the component can not handle autoProcessQueue: false */
+.dz-progress {
+    display: none;
+}
