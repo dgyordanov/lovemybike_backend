@@ -1,10 +1,12 @@
 package com.livemybike.shop.security;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
-import lombok.Data;
-
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "accounts")
 public class Account {
@@ -18,5 +20,19 @@ public class Account {
 
     @Column(nullable = false)
     private String password;
+
+    @Override
+    public boolean equals(Object secondAccount) {
+        if (secondAccount instanceof Account) {
+            return id != null && id.equals(((Account) secondAccount).id);
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.intValue() : 0;
+    }
 
 }

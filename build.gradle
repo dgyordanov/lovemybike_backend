@@ -31,6 +31,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.modelmapper:modelmapper:0.7.5")
     compile("com.amazonaws:aws-java-sdk-s3")
+    compile("commons-lang:commons-lang:2.6")
     runtime("com.h2database:h2")
     testCompile("junit:junit")
     testCompile("org.springframework:spring-test:4.2.5.RELEASE")
