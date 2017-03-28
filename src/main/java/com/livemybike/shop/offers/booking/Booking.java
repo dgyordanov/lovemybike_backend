@@ -20,8 +20,11 @@ public class Booking implements Serializable {
     @Convert(converter = StateJpaConverter.class)
     private AbstractState state;
 
-    private Date from;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "fromDate")
+    private Date fromDate;
 
+    @Temporal(TemporalType.TIMESTAMP)
     private Date to;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -50,7 +53,7 @@ public class Booking implements Serializable {
             throw new IllegalArgumentException("From date could not be before today");
         }
 
-        this.from = from;
+        this.fromDate = from;
         this.to = to;
         this.offer = offer;
         this.requestedBy = requestedBy;
@@ -69,8 +72,8 @@ public class Booking implements Serializable {
         this.state = state;
     }
 
-    public Date getFrom() {
-        return from;
+    public Date getFromDate() {
+        return fromDate;
     }
 
     public Date getTo() {
@@ -89,15 +92,15 @@ public class Booking implements Serializable {
         return id;
     }
 
-    public void approve(Account currentUser) throws InvalidStateTransitionException {
+    void approve(Account currentUser) throws InvalidStateTransitionException {
         state.approve(this, currentUser);
     }
 
-    public void cancel(Account currentUser) throws InvalidStateTransitionException {
+    void cancel(Account currentUser) throws InvalidStateTransitionException {
         state.cancel(this, currentUser);
     }
 
-    public void reopen(Account currentUser) throws InvalidStateTransitionException {
+    void reopen(Account currentUser) throws InvalidStateTransitionException {
         state.reopen(this, currentUser);
     }
 

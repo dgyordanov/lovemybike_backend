@@ -12,7 +12,7 @@ class ApprovedState extends AbstractState {
             throw new InvalidStateTransitionException("User not allowed to cancel the booking");
         }
 
-        if (booking.getFrom().before(new Date())) {
+        if (booking.getFromDate().before(new Date())) {
             throw new InvalidStateTransitionException("Booking from date is already in the past");
         }
         booking.setState(State.CANCELED_STATE);

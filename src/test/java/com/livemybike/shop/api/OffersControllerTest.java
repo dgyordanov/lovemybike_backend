@@ -1,41 +1,36 @@
 package com.livemybike.shop.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.livemybike.shop.ShopServer;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.TestRestTemplate;
-import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.web.client.RestTemplate;
-
-import java.util.Map;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(ShopServer.class)
-@WebIntegrationTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class OffersControllerTest {
 
-    public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-    private static final String BASE_URL = "http://localhost:9000/offers";
-    private RestTemplate template = new TestRestTemplate();
+    @Autowired
+    private TestRestTemplate restTemplate;
 
     @Test
-    public void listOffersTest() throws JsonProcessingException {
-        ResponseEntity<Map[]> response = template.getForEntity(BASE_URL, Map[].class);
+    public void listOffersTest() throws JsonProcessingException, JSONException {
+        ResponseEntity<String> response = restTemplate.getForEntity("/offers?pageNumber=1", String.class);
+        JSONObject jsonResponse = new JSONObject(response.getBody());
 
         assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
 
-        Map[] responseBody = response.getBody();
-        assertThat(responseBody.length, equalTo(7));
-        assertThat(responseBody[0].get("title"), equalTo("Haibaike big curve"));
+        assertThat(jsonResponse.getJSONArray("content").getJSONObject(0).getString("title")
+                , equalTo("Haibaike big curve"));
     }
 
 }

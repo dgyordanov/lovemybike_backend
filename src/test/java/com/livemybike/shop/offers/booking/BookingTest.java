@@ -5,18 +5,12 @@ import com.livemybike.shop.security.Account;
 import com.livemybike.shop.util.DateUtil;
 import org.junit.Test;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class BookingTest {
-
-    private static final long OFFER_ID = 234234L;
-    private static final long OFFER_OWNER_ID = 34687L;
-    private static final long REQUESTED_BY_ID = 254574L;
-    private static final long SOMEBODY_ELSE_ID = 897459825L;
+public class BookingTest extends AbstractBookingTest {
 
     @Test
     public void defaultStateRequestTest() {
@@ -34,7 +28,7 @@ public class BookingTest {
         Booking booking = new Booking(from, to, offer, requestedBy);
 
         assertThat(booking.getState().getValue(), equalTo(State.REQUEST_STATE_STRING));
-        assertThat(booking.getFrom(), equalTo(DateUtil.getBeginningOfDay(from)));
+        assertThat(booking.getFromDate(), equalTo(DateUtil.getBeginningOfDay(from)));
         assertThat(booking.getTo(), equalTo(DateUtil.getEndOfDay(to)));
         assertThat(booking.getOffer(), equalTo(offer));
         assertThat(booking.getRequestedBy(), equalTo(requestedBy));
@@ -225,56 +219,5 @@ public class BookingTest {
 
     }
 
-    private Offer getOffer(Account owner) {
-        Offer offer = new Offer();
-        offer.setId(OFFER_ID);
-        offer.setOwner(owner);
-        return offer;
-    }
-
-    private Account getOfferOwner() {
-        Account account = new Account();
-        account.setId(OFFER_OWNER_ID);
-        return account;
-    }
-
-    private Account getRequestedBy() {
-        Account account = new Account();
-        account.setId(REQUESTED_BY_ID);
-        return account;
-    }
-
-    private Account getSomebodyElse() {
-        Account account = new Account();
-        account.setId(SOMEBODY_ELSE_ID);
-        return account;
-    }
-
-    private Date getFrom() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, 2);
-        return calendar.getTime();
-    }
-
-    private Date getTo() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, 10);
-        return calendar.getTime();
-    }
-
-    private Date getFromPast() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, -10);
-        return calendar.getTime();
-    }
-
-    private Booking createValidBooking() {
-        Date from = getFrom();
-        Date to = getTo();
-        Offer offer = getOffer(getOfferOwner());
-        Account requestedBy = getRequestedBy();
-
-        return new Booking(from, to, offer, requestedBy);
-    }
 
 }

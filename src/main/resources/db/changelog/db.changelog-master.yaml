@@ -187,7 +187,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: from
+                  name: from_date
                   type: TIMESTAMP
                   constraints:
                     nullable: false
