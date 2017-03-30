@@ -39,14 +39,16 @@ public abstract class AbstractBookingTest {
     }
 
     protected Date getFrom() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, 2);
-        return calendar.getTime();
+        return getDate(2);
     }
 
     protected Date getTo() {
+        return getDate(10);
+    }
+
+    protected Date getDate(int deltaInDays) {
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, 10);
+        calendar.add(Calendar.DATE, deltaInDays);
         return calendar.getTime();
     }
 

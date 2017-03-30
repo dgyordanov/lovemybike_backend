@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -17,6 +18,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Transactional
 public class BookingServiceTest extends AbstractBookingTest {
 
     @Autowired
@@ -61,6 +63,78 @@ public class BookingServiceTest extends AbstractBookingTest {
 
         assertThat(savedBooking1.getId(), is(greaterThan(0L)));
         assertThat(savedBooking2.getId(), is(greaterThan(0L)));
+    }
+
+    @Test(expected = InvalidBookingException.class)
+    public void requestBookingSameIntervalApprovedBookingExist1Test() throws InvalidBookingException {
+        Offer offer = offersRepo.findOne(1L);
+        Account requestedBy2 = accountRepo.findOne(2L);
+        Date from1 = getDate(3);
+        Date to1 = getDate(7);
+        Booking booking1 = new Booking(from1, to1, offer, requestedBy2);
+        booking1.setState(State.APPROVED_STATE);
+        bookingsRepo.save(booking1);
+
+        Date from2 = getDate(2);
+        Date to2 = getDate(5);
+        Account requestedBy3 = accountRepo.findOne(3L);
+        Booking booking2 = new Booking(from2, to2, offer, requestedBy3);
+
+        bookingService.requestBooking(booking2);
+    }
+
+    @Test(expected = InvalidBookingException.class)
+    public void requestBookingSameIntervalApprovedBookingExist2Test() throws InvalidBookingException {
+        Offer offer = offersRepo.findOne(1L);
+        Account requestedBy2 = accountRepo.findOne(2L);
+        Date from1 = getDate(2);
+        Date to1 = getDate(5);
+        Booking booking1 = new Booking(from1, to1, offer, requestedBy2);
+        booking1.setState(State.APPROVED_STATE);
+        bookingsRepo.save(booking1);
+
+        Date from2 = getDate(3);
+        Date to2 = getDate(7);
+        Account requestedBy3 = accountRepo.findOne(3L);
+        Booking booking2 = new Booking(from2, to2, offer, requestedBy3);
+
+        bookingService.requestBooking(booking2);
+    }
+
+    @Test(expected = InvalidBookingException.class)
+    public void requestBookingSameIntervalApprovedBookingExist3Test() throws InvalidBookingException {
+        Offer offer = offersRepo.findOne(1L);
+        Account requestedBy2 = accountRepo.findOne(2L);
+        Date from1 = getDate(4);
+        Date to1 = getDate(5);
+        Booking booking1 = new Booking(from1, to1, offer, requestedBy2);
+        booking1.setState(State.APPROVED_STATE);
+        bookingsRepo.save(booking1);
+
+        Date from2 = getDate(3);
+        Date to2 = getDate(7);
+        Account requestedBy3 = accountRepo.findOne(3L);
+        Booking booking2 = new Booking(from2, to2, offer, requestedBy3);
+
+        bookingService.requestBooking(booking2);
+    }
+
+    @Test(expected = InvalidBookingException.class)
+    public void requestBookingSameIntervalApprovedBookingExist4Test() throws InvalidBookingException {
+        Offer offer = offersRepo.findOne(1L);
+        Account requestedBy2 = accountRepo.findOne(2L);
+        Date from1 = getDate(3);
+        Date to1 = getDate(7);
+        Booking booking1 = new Booking(from1, to1, offer, requestedBy2);
+        booking1.setState(State.APPROVED_STATE);
+        bookingsRepo.save(booking1);
+
+        Date from2 = getDate(4);
+        Date to2 = getDate(5);
+        Account requestedBy3 = accountRepo.findOne(3L);
+        Booking booking2 = new Booking(from2, to2, offer, requestedBy3);
+
+        bookingService.requestBooking(booking2);
     }
 
 }

@@ -11,8 +11,8 @@ public interface BookingsRepo extends JpaRepository<Booking, Long> {
     @Query("SELECT COUNT(b) FROM Booking b" +
             " WHERE b.state = ?1" +
             " AND ((b.fromDate between ?2 AND ?3)" +
-            " OR (b.to between ?1 AND ?2)" +
-            " OR (b.fromDate < ?1 AND b.to > ?2))")
+            " OR (b.to between ?2 AND ?3)" +
+            " OR (b.fromDate < ?2 AND b.to > ?3))")
     int countApprovedBookingsForInterval(State state, Date fromDate, Date toDate);
 
 }
