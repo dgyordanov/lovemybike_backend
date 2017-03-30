@@ -8,7 +8,6 @@ class RequestState extends AbstractState {
 
     @Override
     void approve(Booking booking, Account currentUser) throws InvalidStateTransitionException {
-        // TODO: when booking is approved, we should make sure that there is no other booking for this period
         if (!booking.getOffer().getOwner().equals(currentUser)) {
             throw new InvalidStateTransitionException("User not allowed to approve the booking");
         }

@@ -1,33 +1,26 @@
 package com.livemybike.shop.offers;
 
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
+import com.livemybike.shop.images.Image;
+import com.livemybike.shop.images.ImageRepo;
 import com.livemybike.shop.images.ImageStoringException;
 import com.livemybike.shop.offers.booking.Booking;
+import com.livemybike.shop.security.Account;
+import com.livemybike.shop.security.AccountService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.livemybike.shop.images.Image;
-import com.livemybike.shop.images.ImageRepo;
-import com.livemybike.shop.security.Account;
-import com.livemybike.shop.security.AccountRepo;
-import com.livemybike.shop.security.AnonymousAuthNotAllowedException;
-
 import javax.transaction.Transactional;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OffersServiceImpl implements OffersService {
@@ -38,13 +31,13 @@ public class OffersServiceImpl implements OffersService {
     private OffersRepo offersRepo;
 
     @Autowired
-    private AccountRepo accountRepo;
-
-    @Autowired
     private ModelMapper modelMapper;
 
     @Autowired
     private ImageRepo imageRepo;
+
+    @Autowired
+    private AccountService accountService;
 
     @Override
     public Page<OfferDto> listOffers(String genderFilter, String location, int pageNumber) {
@@ -68,8 +61,8 @@ public class OffersServiceImpl implements OffersService {
 
     private List<String> getGenderFiltersList(String genderFilter) {
         return genderFilter.chars()
-                        .mapToObj(c -> String.valueOf((char) c))
-                        .collect(Collectors.toList());
+                .mapToObj(c -> String.valueOf((char) c))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -78,18 +71,11 @@ public class OffersServiceImpl implements OffersService {
                                 String number, String postcode, String city, MultipartFile... images) {
         Offer offer = new Offer();
 
-        Authentication user = SecurityContextHolder.getContext().getAuthentication();
-        if (user instanceof AnonymousAuthenticationToken) {
-            throw new AnonymousAuthNotAllowedException(
-                    "User should be logged in before posting an offer");
-        }
-
         if (images == null || images.length == 0 || images.length > 6) {
             throw new IllegalArgumentException("Images should be between 1 and 6");
         }
 
-        User authIdentity = (User) user.getPrincipal();
-        Account loggedInAccount = accountRepo.findByEmail(authIdentity.getUsername());
+        Account loggedInAccount = accountService.getCurrentLoggedIn();
 
         offer.setOwner(loggedInAccount);
         offer.setTitle(title);
@@ -103,11 +89,21 @@ public class OffersServiceImpl implements OffersService {
 
         offer.setImage0(images[0].getOriginalFilename());
 
-        if (images[1] != null) { offer.setImage1(images[1].getOriginalFilename()); }
-        if (images[2] != null) { offer.setImage2(images[2].getOriginalFilename()); }
-        if (images[3] != null) { offer.setImage3(images[3].getOriginalFilename()); }
-        if (images[4] != null) { offer.setImage4(images[4].getOriginalFilename()); }
-        if (images[5] != null) { offer.setImage5(images[5].getOriginalFilename()); }
+        if (images[1] != null) {
+            offer.setImage1(images[1].getOriginalFilename());
+        }
+        if (images[2] != null) {
+            offer.setImage2(images[2].getOriginalFilename());
+        }
+        if (images[3] != null) {
+            offer.setImage3(images[3].getOriginalFilename());
+        }
+        if (images[4] != null) {
+            offer.setImage4(images[4].getOriginalFilename());
+        }
+        if (images[5] != null) {
+            offer.setImage5(images[5].getOriginalFilename());
+        }
 
         Offer result = offersRepo.save(offer);
 
@@ -118,14 +114,7 @@ public class OffersServiceImpl implements OffersService {
 
     @Override
     public Page<OfferDto> listMyOffers(int pageNumber) {
-        Authentication user = SecurityContextHolder.getContext().getAuthentication();
-        if (user instanceof AnonymousAuthenticationToken) {
-            throw new AnonymousAuthNotAllowedException(
-                    "User should be logged in before to post an offer");
-        }
-
-        User authIdentity = (User) user.getPrincipal();
-        Account loggedInAccount = accountRepo.findByEmail(authIdentity.getUsername());
+        Account loggedInAccount = accountService.getCurrentLoggedIn();
         Page<Offer> offers = offersRepo.findByOwner(loggedInAccount, getPage(pageNumber));
         return convertToDtoList(offers);
     }

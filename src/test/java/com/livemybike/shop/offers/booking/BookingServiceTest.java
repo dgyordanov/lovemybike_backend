@@ -4,10 +4,16 @@ import com.livemybike.shop.offers.Offer;
 import com.livemybike.shop.offers.OffersRepo;
 import com.livemybike.shop.security.Account;
 import com.livemybike.shop.security.AccountRepo;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +38,23 @@ public class BookingServiceTest extends AbstractBookingTest {
 
     @Autowired
     private AccountRepo accountRepo;
+
+    @Autowired
+    private ApplicationContext context;
+
+    public void authenticate(String user, String pass) {
+        AuthenticationManager authenticationManager = this.context
+                .getBean(AuthenticationManager.class);
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(user, pass));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
+    @After
+    public void close() {
+        SecurityContextHolder.clearContext();
+    }
 
     @Test
     public void requestBookingTest() throws InvalidBookingException {
@@ -135,6 +158,58 @@ public class BookingServiceTest extends AbstractBookingTest {
         Booking booking2 = new Booking(from2, to2, offer, requestedBy3);
 
         bookingService.requestBooking(booking2);
+    }
+
+    @Test
+    public void approveBookingTest() throws InvalidBookingException, InvalidStateTransitionException {
+        Offer offer = offersRepo.findOne(1L);
+        authenticate(offer.getOwner().getEmail(), offer.getOwner().getPassword());
+        Date from = getDate(4);
+        Date to = getDate(5);
+        Account requestedBy = accountRepo.findOne(2L);
+        Booking booking = new Booking(from, to, offer, requestedBy);
+
+        Booking savedBooking = bookingService.requestBooking(booking);
+        bookingService.approveBooking(savedBooking.getId());
+
+        Booking approvedBooking = bookingsRepo.findOne(savedBooking.getId());
+
+        assertThat(approvedBooking.getState(), equalTo(State.APPROVED_STATE));
+    }
+
+    @Test
+    public void cancelRequestedBookingTest() throws InvalidBookingException, InvalidStateTransitionException {
+        Offer offer = offersRepo.findOne(1L);
+        authenticate(offer.getOwner().getEmail(), offer.getOwner().getPassword());
+        Date from = getDate(4);
+        Date to = getDate(5);
+        Account requestedBy = accountRepo.findOne(2L);
+        Booking booking = new Booking(from, to, offer, requestedBy);
+
+        Booking savedBooking = bookingService.requestBooking(booking);
+        bookingService.cancelBooking(savedBooking.getId());
+
+        Booking approvedBooking = bookingsRepo.findOne(savedBooking.getId());
+
+        assertThat(approvedBooking.getState(), equalTo(State.CANCELED_STATE));
+    }
+
+    @Test
+    public void cancelApprovedBookingTest() throws InvalidBookingException, InvalidStateTransitionException {
+        Offer offer = offersRepo.findOne(1L);
+        authenticate(offer.getOwner().getEmail(), offer.getOwner().getPassword());
+        Date from = getDate(4);
+        Date to = getDate(5);
+        Account requestedBy = accountRepo.findOne(2L);
+        Booking booking = new Booking(from, to, offer, requestedBy);
+
+        Booking savedBooking = bookingService.requestBooking(booking);
+        bookingService.approveBooking(savedBooking.getId());
+        bookingService.cancelBooking(savedBooking.getId());
+
+        Booking approvedBooking = bookingsRepo.findOne(savedBooking.getId());
+
+        assertThat(approvedBooking.getState(), equalTo(State.CANCELED_STATE));
     }
 
 }

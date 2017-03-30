@@ -24,7 +24,7 @@ public class Account {
     @Override
     public boolean equals(Object secondAccount) {
         if (secondAccount instanceof Account) {
-            return id != null && id.equals(((Account) secondAccount).id);
+            return getId() != null && getId().equals(((Account) secondAccount).getId());
         } else {
             return false;
         }

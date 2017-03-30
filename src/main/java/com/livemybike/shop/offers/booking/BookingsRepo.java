@@ -5,8 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Date;
 
-
-public interface BookingsRepo extends JpaRepository<Booking, Long> {
+interface BookingsRepo extends JpaRepository<Booking, Long> {
 
     @Query("SELECT COUNT(b) FROM Booking b" +
             " WHERE b.state = ?1" +
