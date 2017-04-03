@@ -54,15 +54,8 @@ public class OffersController {
             @RequestParam(value = "image4", required = false) MultipartFile image4,
             @RequestParam(value = "image5", required = false) MultipartFile image5) {
 
-            OfferDto offerDto = offerService.createOffer(title, price, gender, description, street,
+            return offerService.createOffer(title, price, gender, description, street,
                     number, postcode, city, image0, image1, image2, image3, image4, image5);
-            return offerDto;
-    }
-
-    @RequestMapping(value = "/{id}/bookings", method = GET, produces = APPLICATION_JSON_VALUE)
-    public List<Booking> readOfferBookings(
-            @PathVariable(value="id") long offerId) {
-        return offerService.getOfferBookings(offerId);
     }
 
 }

@@ -1,5 +1,9 @@
 package com.livemybike.shop.offers.booking;
 
+import com.livemybike.shop.offers.Offer;
+import com.livemybike.shop.offers.OffersRepo;
+import com.livemybike.shop.security.Account;
+import com.livemybike.shop.security.AccountRepo;
 import com.livemybike.shop.security.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +18,18 @@ public class BookingService {
 
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private OffersRepo offersRepo;
+
+    @Autowired
+    private AccountRepo accountRepo;
+
+    public Booking buildBooking(BookingDTO bookingDTO) {
+        Offer offer = offersRepo.findOne(bookingDTO.getOfferId());
+        Account requestedBy = accountRepo.findOne(bookingDTO.getRequestedById());
+        return new Booking(bookingDTO.getFromDate(), bookingDTO.getToDate(), offer, requestedBy);
+    }
 
     @Transactional
     public Booking requestBooking(Booking newBooking) throws InvalidBookingException {
