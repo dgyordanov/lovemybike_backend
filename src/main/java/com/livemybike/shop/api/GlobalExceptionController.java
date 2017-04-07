@@ -4,6 +4,7 @@ import com.livemybike.shop.images.ImageStoringException;
 import com.livemybike.shop.offers.booking.InvalidBookingException;
 import com.livemybike.shop.offers.booking.InvalidStateTransitionException;
 import com.livemybike.shop.security.AnonymousAuthNotAllowedException;
+import com.livemybike.shop.security.AuthorizationException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,11 @@ public class GlobalExceptionController {
     @ExceptionHandler(AnonymousAuthNotAllowedException.class)
     public ResponseEntity<Error> handleAuthException(AnonymousAuthNotAllowedException e) {
         return new ResponseEntity<>(new Error(e.getMessage()), HttpStatus.UNAUTHORIZED);
+    }
 
+    @ExceptionHandler(AuthorizationException.class)
+    public ResponseEntity<Error> handleAuthException(AuthorizationException e) {
+        return new ResponseEntity<>(new Error(e.getMessage()), HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(ImageStoringException.class)

@@ -6,6 +6,7 @@ import com.livemybike.shop.images.ImageStoringException;
 import com.livemybike.shop.offers.booking.Booking;
 import com.livemybike.shop.security.Account;
 import com.livemybike.shop.security.AccountService;
+import com.livemybike.shop.security.AuthorizationException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -121,8 +122,14 @@ public class OffersServiceImpl implements OffersService {
 
     @Override
     public List<Booking> getOfferBookings(long offerId) {
-        // TODO only the offer owner could see this
         Offer offer = offersRepo.findOne(offerId);
+        if (offer == null) {
+            throw new IllegalArgumentException(String.format("Offer with ID: %d not found", offerId));
+        }
+        Account currentUser = accountService.getCurrentLoggedIn();
+        if (!offer.getOwner().equals(currentUser) ) {
+            throw new AuthorizationException("The offer is not owned by the user");
+        }
         return offer.getBookings();
     }
 
