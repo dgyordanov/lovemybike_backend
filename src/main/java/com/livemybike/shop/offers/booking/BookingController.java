@@ -43,7 +43,7 @@ public class BookingController {
     @RequestMapping(value = "/{id}/@cancel", method = GET, produces = APPLICATION_JSON_VALUE)
     public BookingDTO cancelBooking(
             @PathVariable(value = "id") long bookingId) throws InvalidBookingException, InvalidStateTransitionException {
-        Booking booking = bookingService.approveBooking(bookingId);
+        Booking booking = bookingService.cancelBooking(bookingId);
         return new BookingDTO(booking.getId(), booking.getFromDate(), booking.getTo(),
                 booking.getRequestedBy().getId(), booking.getOffer().getId());
     }
