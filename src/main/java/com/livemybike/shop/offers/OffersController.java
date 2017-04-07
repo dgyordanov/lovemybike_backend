@@ -70,10 +70,10 @@ public class OffersController {
             @RequestBody BookingDTO bookingDTO,
             @PathVariable Long offerId) throws InvalidBookingException {
         Booking booking = bookingService.buildBooking(new BookingDTO(null, bookingDTO.getFromDate()
-                , bookingDTO.getToDate(), null, offerId));
+                , bookingDTO.getToDate(), null, offerId, null));
         Booking storedBooking = bookingService.requestBooking(booking);
         return new BookingDTO(storedBooking.getId(), storedBooking.getFromDate(), storedBooking.getTo(),
-                storedBooking.getRequestedBy().getId(), storedBooking.getOffer().getId());
+                storedBooking.getRequestedBy().getId(), storedBooking.getOffer().getId(), storedBooking.getState().getValue());
     }
 
     @RequestMapping(value = "/{offerId}/bookings", method = GET, produces = APPLICATION_JSON_VALUE)
@@ -81,7 +81,7 @@ public class OffersController {
             @PathVariable(value="offerId") long offerId) {
         return offerService.getOfferBookings(offerId).stream()
                 .map(booking -> new BookingDTO(booking.getId(), booking.getFromDate(), booking.getTo(),
-                        booking.getRequestedBy().getId(), booking.getOffer().getId()))
+                        booking.getRequestedBy().getId(), booking.getOffer().getId(), booking.getState().getValue()))
                 .collect(Collectors.toList());
     }
 

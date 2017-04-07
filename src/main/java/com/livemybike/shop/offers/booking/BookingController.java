@@ -28,7 +28,7 @@ public class BookingController {
         Booking booking = bookingsRepo.findOne(bookingId);
         return booking != null ?
                 new BookingDTO(booking.getId(), booking.getFromDate(), booking.getTo(),
-                        booking.getRequestedBy().getId(), booking.getOffer().getId())
+                        booking.getRequestedBy().getId(), booking.getOffer().getId(), booking.getState().getValue())
                 : null;
     }
 
@@ -37,7 +37,7 @@ public class BookingController {
             @PathVariable(value = "id") long bookingId) throws InvalidBookingException, InvalidStateTransitionException {
         Booking booking = bookingService.approveBooking(bookingId);
         return new BookingDTO(booking.getId(), booking.getFromDate(), booking.getTo(),
-                booking.getRequestedBy().getId(), booking.getOffer().getId());
+                booking.getRequestedBy().getId(), booking.getOffer().getId(), booking.getState().getValue());
     }
 
     @RequestMapping(value = "/{id}/@cancel", method = GET, produces = APPLICATION_JSON_VALUE)
@@ -45,7 +45,7 @@ public class BookingController {
             @PathVariable(value = "id") long bookingId) throws InvalidBookingException, InvalidStateTransitionException {
         Booking booking = bookingService.cancelBooking(bookingId);
         return new BookingDTO(booking.getId(), booking.getFromDate(), booking.getTo(),
-                booking.getRequestedBy().getId(), booking.getOffer().getId());
+                booking.getRequestedBy().getId(), booking.getOffer().getId(), booking.getState().getValue());
     }
 
     @RequestMapping(value = "/{id}/@reopen", method = GET, produces = APPLICATION_JSON_VALUE)
@@ -53,7 +53,7 @@ public class BookingController {
             @PathVariable(value = "id") long bookingId) throws InvalidBookingException, InvalidStateTransitionException {
         Booking booking = bookingService.reopenBooking(bookingId);
         return new BookingDTO(booking.getId(), booking.getFromDate(), booking.getTo(),
-                booking.getRequestedBy().getId(), booking.getOffer().getId());
+                booking.getRequestedBy().getId(), booking.getOffer().getId(), booking.getState().getValue());
     }
 
 }
