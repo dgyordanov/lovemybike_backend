@@ -97,4 +97,17 @@ public class BookingService {
         return bookingsRepo.save(booking);
     }
 
+    public Booking getBooking(long bookingId) throws InvalidBookingException {
+        Booking booking = bookingsRepo.findOne(bookingId);
+        if (booking == null) {
+            throw new InvalidBookingException(String.format("Booking with ID: %d not found", bookingId));
+        }
+        Account currentUser = accountService.getCurrentLoggedIn();
+        if (!booking.getOffer().getOwner().equals(currentUser) && !booking.getRequestedBy().equals(currentUser)) {
+            throw new InvalidBookingException("Booking with ID: %d not found");
+        }
+
+        return booking;
+    }
+
 }

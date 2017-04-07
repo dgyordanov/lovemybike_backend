@@ -24,12 +24,10 @@ public class BookingController {
 
     @RequestMapping(value = "/{id}", method = GET, produces = APPLICATION_JSON_VALUE)
     public BookingDTO getBooking(
-            @PathVariable(value = "id") long bookingId) {
-        Booking booking = bookingsRepo.findOne(bookingId);
-        return booking != null ?
-                new BookingDTO(booking.getId(), booking.getFromDate(), booking.getTo(),
-                        booking.getRequestedBy().getId(), booking.getOffer().getId(), booking.getState().getValue())
-                : null;
+            @PathVariable(value = "id") long bookingId) throws InvalidBookingException {
+        Booking booking = bookingService.getBooking(bookingId);
+        return new BookingDTO(booking.getId(), booking.getFromDate(), booking.getTo()
+                , booking.getRequestedBy().getId(), booking.getOffer().getId(), booking.getState().getValue());
     }
 
     @RequestMapping(value = "/{id}/@approve", method = GET, produces = APPLICATION_JSON_VALUE)

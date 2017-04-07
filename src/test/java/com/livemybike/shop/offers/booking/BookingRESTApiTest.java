@@ -83,7 +83,7 @@ public class BookingRESTApiTest extends AbstractBookingTest {
         BookingDTO requestedBooking = restTemplate.exchange(
                 "/offers/1/bookings", HttpMethod.POST, requestedBookingEntity, BookingDTO.class).getBody();
 
-        HttpEntity<String> approveBookingEntity = new HttpEntity<>(createBookingJson(), createHeaders(USERNAME1, PASSWORD1));
+        HttpEntity<String> approveBookingEntity = new HttpEntity<>(createHeaders(USERNAME1, PASSWORD1));
         ResponseEntity<BookingDTO> response = restTemplate.exchange(String.format("/bookings/%s/@approve", requestedBooking.getId().toString())
                 , HttpMethod.GET, approveBookingEntity, BookingDTO.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -91,7 +91,7 @@ public class BookingRESTApiTest extends AbstractBookingTest {
 
     @Test
     public void approveNotExistingBooking() {
-        HttpEntity<String> approveBookingEntity = new HttpEntity<>(createBookingJson(), createHeaders(USERNAME1, PASSWORD1));
+        HttpEntity<String> approveBookingEntity = new HttpEntity<>(createHeaders(USERNAME1, PASSWORD1));
         ResponseEntity<BookingDTO> response = restTemplate.exchange("/bookings/234132/@approve"
                 , HttpMethod.GET, approveBookingEntity, BookingDTO.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -103,7 +103,7 @@ public class BookingRESTApiTest extends AbstractBookingTest {
         BookingDTO requestedBooking = restTemplate.exchange(
                 "/offers/1/bookings", HttpMethod.POST, requestedBookingEntity, BookingDTO.class).getBody();
 
-        HttpEntity<String> approveBookingEntity = new HttpEntity<>(createBookingJson(), createHeaders(USERNAME3, PASSWORD3));
+        HttpEntity<String> approveBookingEntity = new HttpEntity<>(createHeaders(USERNAME3, PASSWORD3));
         ResponseEntity<String> response = restTemplate.exchange(String.format("/bookings/%s/@approve", requestedBooking.getId().toString())
                 , HttpMethod.GET, approveBookingEntity, String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -115,7 +115,7 @@ public class BookingRESTApiTest extends AbstractBookingTest {
         BookingDTO requestedBooking = restTemplate.exchange(
                 "/offers/1/bookings", HttpMethod.POST, requestedBookingEntity, BookingDTO.class).getBody();
 
-        HttpEntity<String> cancelBookingEntity = new HttpEntity<>(createBookingJson(), createHeaders(USERNAME2, PASSWORD2));
+        HttpEntity<String> cancelBookingEntity = new HttpEntity<>(createHeaders(USERNAME2, PASSWORD2));
         ResponseEntity<String> response = restTemplate.exchange(String.format("/bookings/%s/@cancel", requestedBooking.getId().toString())
                 , HttpMethod.GET, cancelBookingEntity, String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -127,7 +127,7 @@ public class BookingRESTApiTest extends AbstractBookingTest {
         BookingDTO requestedBooking = restTemplate.exchange(
                 "/offers/1/bookings", HttpMethod.POST, requestedBookingEntity, BookingDTO.class).getBody();
 
-        HttpEntity<String> cancelBookingEntity = new HttpEntity<>(createBookingJson(), createHeaders(USERNAME3, PASSWORD3));
+        HttpEntity<String> cancelBookingEntity = new HttpEntity<>(createHeaders(USERNAME3, PASSWORD3));
         ResponseEntity<String> response = restTemplate.exchange(String.format("/bookings/%s/@cancel", requestedBooking.getId().toString())
                 , HttpMethod.GET, cancelBookingEntity, String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -139,11 +139,11 @@ public class BookingRESTApiTest extends AbstractBookingTest {
         BookingDTO requestedBooking = restTemplate.exchange(
                 "/offers/1/bookings", HttpMethod.POST, requestedBookingEntity, BookingDTO.class).getBody();
 
-        HttpEntity<String> approveBookingEntity = new HttpEntity<>(createBookingJson(), createHeaders(USERNAME1, PASSWORD1));
+        HttpEntity<String> approveBookingEntity = new HttpEntity<>(createHeaders(USERNAME1, PASSWORD1));
         restTemplate.exchange(String.format("/bookings/%s/@approve", requestedBooking.getId().toString())
                 , HttpMethod.GET, approveBookingEntity, BookingDTO.class);
 
-        HttpEntity<String> cancelBookingEntity = new HttpEntity<>(createBookingJson(), createHeaders(USERNAME1, PASSWORD1));
+        HttpEntity<String> cancelBookingEntity = new HttpEntity<>(createHeaders(USERNAME1, PASSWORD1));
         ResponseEntity<String> response = restTemplate.exchange(String.format("/bookings/%s/@cancel", requestedBooking.getId().toString())
                 , HttpMethod.GET, cancelBookingEntity, String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -155,11 +155,11 @@ public class BookingRESTApiTest extends AbstractBookingTest {
         BookingDTO requestedBooking = restTemplate.exchange(
                 "/offers/1/bookings", HttpMethod.POST, requestedBookingEntity, BookingDTO.class).getBody();
 
-        HttpEntity<String> approveBookingEntity = new HttpEntity<>(createBookingJson(), createHeaders(USERNAME1, PASSWORD1));
+        HttpEntity<String> approveBookingEntity = new HttpEntity<>(createHeaders(USERNAME1, PASSWORD1));
         restTemplate.exchange(String.format("/bookings/%s/@approve", requestedBooking.getId().toString())
                 , HttpMethod.GET, approveBookingEntity, BookingDTO.class);
 
-        HttpEntity<String> cancelBookingEntity = new HttpEntity<>(createBookingJson(), createHeaders(USERNAME2, PASSWORD2));
+        HttpEntity<String> cancelBookingEntity = new HttpEntity<>(createHeaders(USERNAME2, PASSWORD2));
         ResponseEntity<String> response = restTemplate.exchange(String.format("/bookings/%s/@cancel", requestedBooking.getId().toString())
                 , HttpMethod.GET, cancelBookingEntity, String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -171,11 +171,11 @@ public class BookingRESTApiTest extends AbstractBookingTest {
         BookingDTO requestedBooking = restTemplate.exchange(
                 "/offers/1/bookings", HttpMethod.POST, requestedBookingEntity, BookingDTO.class).getBody();
 
-        HttpEntity<String> approveBookingEntity = new HttpEntity<>(createBookingJson(), createHeaders(USERNAME1, PASSWORD1));
+        HttpEntity<String> approveBookingEntity = new HttpEntity<>(createHeaders(USERNAME1, PASSWORD1));
         restTemplate.exchange(String.format("/bookings/%s/@approve", requestedBooking.getId().toString())
                 , HttpMethod.GET, approveBookingEntity, BookingDTO.class);
 
-        HttpEntity<String> cancelBookingEntity = new HttpEntity<>(createBookingJson(), createHeaders(USERNAME3, PASSWORD3));
+        HttpEntity<String> cancelBookingEntity = new HttpEntity<>(createHeaders(USERNAME3, PASSWORD3));
         ResponseEntity<String> response = restTemplate.exchange(String.format("/bookings/%s/@cancel", requestedBooking.getId().toString())
                 , HttpMethod.GET, cancelBookingEntity, String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -187,15 +187,15 @@ public class BookingRESTApiTest extends AbstractBookingTest {
         BookingDTO requestedBooking = restTemplate.exchange(
                 "/offers/1/bookings", HttpMethod.POST, requestedBookingEntity, BookingDTO.class).getBody();
 
-        HttpEntity<String> approveBookingEntity = new HttpEntity<>(createBookingJson(), createHeaders(USERNAME1, PASSWORD1));
+        HttpEntity<String> approveBookingEntity = new HttpEntity<>(createHeaders(USERNAME1, PASSWORD1));
         restTemplate.exchange(String.format("/bookings/%s/@approve", requestedBooking.getId().toString())
                 , HttpMethod.GET, approveBookingEntity, BookingDTO.class);
 
-        HttpEntity<String> cancelBookingEntity = new HttpEntity<>(createBookingJson(), createHeaders(USERNAME1, PASSWORD1));
+        HttpEntity<String> cancelBookingEntity = new HttpEntity<>(createHeaders(USERNAME1, PASSWORD1));
         restTemplate.exchange(String.format("/bookings/%s/@cancel", requestedBooking.getId().toString())
                 , HttpMethod.GET, cancelBookingEntity, BookingDTO.class);
 
-        HttpEntity<String> reopenedBookingEntity = new HttpEntity<>(createBookingJson(), createHeaders(USERNAME2, PASSWORD2));
+        HttpEntity<String> reopenedBookingEntity = new HttpEntity<>(createHeaders(USERNAME2, PASSWORD2));
         ResponseEntity<BookingDTO> response = restTemplate.exchange(String.format("/bookings/%s/@reopen", requestedBooking.getId().toString())
                 , HttpMethod.GET, reopenedBookingEntity, BookingDTO.class);
 
@@ -209,7 +209,7 @@ public class BookingRESTApiTest extends AbstractBookingTest {
         BookingDTO requestedBooking = restTemplate.exchange(
                 "/offers/1/bookings", HttpMethod.POST, requestedBookingEntity, BookingDTO.class).getBody();
 
-        HttpEntity<String> approveBookingEntity = new HttpEntity<>(createBookingJson(), createHeaders(USERNAME1, PASSWORD1));
+        HttpEntity<String> approveBookingEntity = new HttpEntity<>(createHeaders(USERNAME1, PASSWORD1));
         restTemplate.exchange(String.format("/bookings/%s/@approve", requestedBooking.getId().toString())
                 , HttpMethod.GET, approveBookingEntity, BookingDTO.class);
 
@@ -217,9 +217,68 @@ public class BookingRESTApiTest extends AbstractBookingTest {
         restTemplate.exchange(String.format("/bookings/%s/@cancel", requestedBooking.getId().toString())
                 , HttpMethod.GET, cancelBookingEntity, BookingDTO.class);
 
-        HttpEntity<String> reopenedBookingEntity = new HttpEntity<>(createBookingJson(), createHeaders(USERNAME3, PASSWORD3));
+        HttpEntity<String> reopenedBookingEntity = new HttpEntity<>(createHeaders(USERNAME3, PASSWORD3));
         ResponseEntity<BookingDTO> response = restTemplate.exchange(String.format("/bookings/%s/@reopen", requestedBooking.getId().toString())
                 , HttpMethod.GET, reopenedBookingEntity, BookingDTO.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    public void readBookingByRequester() {
+        HttpEntity<String> requestedBookingEntity = new HttpEntity<>(createBookingJson(), createHeaders(USERNAME2, PASSWORD2));
+        BookingDTO requestedBooking = restTemplate.exchange(
+                "/offers/1/bookings", HttpMethod.POST, requestedBookingEntity, BookingDTO.class).getBody();
+
+        HttpEntity<String> reopenedBookingEntity = new HttpEntity<>(createHeaders(USERNAME2, PASSWORD2));
+        ResponseEntity<BookingDTO> response = restTemplate.exchange(String.format("/bookings/%s/", requestedBooking.getId().toString())
+                , HttpMethod.GET, reopenedBookingEntity, BookingDTO.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody().getStatus()).isEqualTo(State.REQUEST_STATE_STRING);
+        assertThat(response.getBody().getId()).isGreaterThan(0);
+        assertThat(response.getBody().getOfferId()).isEqualTo(1L);
+        assertThat(response.getBody().getRequestedById()).isEqualTo(2L);
+        assertThat(response.getBody().getFromDate()).isNotNull();
+        assertThat(response.getBody().getToDate()).isNotNull();
+    }
+
+    @Test
+    public void readBookingByOfferOwner() {
+        HttpEntity<String> requestedBookingEntity = new HttpEntity<>(createBookingJson(), createHeaders(USERNAME2, PASSWORD2));
+        BookingDTO requestedBooking = restTemplate.exchange(
+                "/offers/1/bookings", HttpMethod.POST, requestedBookingEntity, BookingDTO.class).getBody();
+
+        HttpEntity<String> reopenedBookingEntity = new HttpEntity<>(createHeaders(USERNAME1, PASSWORD1));
+        ResponseEntity<BookingDTO> response = restTemplate.exchange(String.format("/bookings/%s/", requestedBooking.getId().toString())
+                , HttpMethod.GET, reopenedBookingEntity, BookingDTO.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody().getStatus()).isEqualTo(State.REQUEST_STATE_STRING);
+        assertThat(response.getBody().getId()).isGreaterThan(0);
+        assertThat(response.getBody().getOfferId()).isEqualTo(1L);
+        assertThat(response.getBody().getRequestedById()).isEqualTo(2L);
+        assertThat(response.getBody().getFromDate()).isNotNull();
+        assertThat(response.getBody().getToDate()).isNotNull();
+    }
+
+    @Test
+    public void readBookingByUnauthorized() {
+        HttpEntity<String> requestedBookingEntity = new HttpEntity<>(createBookingJson(), createHeaders(USERNAME2, PASSWORD2));
+        BookingDTO requestedBooking = restTemplate.exchange(
+                "/offers/1/bookings", HttpMethod.POST, requestedBookingEntity, BookingDTO.class).getBody();
+
+        HttpEntity<String> reopenedBookingEntity = new HttpEntity<>(createHeaders(USERNAME3, PASSWORD3));
+        ResponseEntity<BookingDTO> response = restTemplate.exchange(String.format("/bookings/%s/", requestedBooking.getId().toString())
+                , HttpMethod.GET, reopenedBookingEntity, BookingDTO.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    public void readNotExistingBooking() {
+        HttpEntity<String> reopenedBookingEntity = new HttpEntity<>(createHeaders(USERNAME3, PASSWORD3));
+        ResponseEntity<BookingDTO> response = restTemplate.exchange("/bookings/12424", HttpMethod.GET, reopenedBookingEntity, BookingDTO.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }

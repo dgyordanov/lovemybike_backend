@@ -121,6 +121,7 @@ public class OffersServiceImpl implements OffersService {
 
     @Override
     public List<Booking> getOfferBookings(long offerId) {
+        // TODO only the offer owner could see this
         Offer offer = offersRepo.findOne(offerId);
         return offer.getBookings();
     }
@@ -157,7 +158,7 @@ public class OffersServiceImpl implements OffersService {
     }
 
     private Page<OfferDto> convertToDtoList(Page<Offer> offerPage) {
-        return offerPage.map(offer -> convertToDto(offer));
+        return offerPage.map(this::convertToDto);
     }
 
 }
