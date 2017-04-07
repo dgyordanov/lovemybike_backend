@@ -27,7 +27,7 @@ public class BookingService {
 
     public Booking buildBooking(BookingDTO bookingDTO) {
         Offer offer = offersRepo.findOne(bookingDTO.getOfferId());
-        Account requestedBy = accountRepo.findOne(bookingDTO.getRequestedById());
+        Account requestedBy = accountService.getCurrentLoggedIn();
         return new Booking(bookingDTO.getFromDate(), bookingDTO.getToDate(), offer, requestedBy);
     }
 
@@ -41,6 +41,23 @@ public class BookingService {
                             newBooking.getFromDate(), newBooking.getTo()));
         }
         return bookingsRepo.save(newBooking);
+    }
+
+    @Transactional
+    public Booking reopenBooking(Long bookingId) throws InvalidBookingException, InvalidStateTransitionException {
+        Booking booking = bookingsRepo.findOne(bookingId);
+        if (booking == null) {
+            throw new InvalidBookingException(String.format("Booking with ID: %d not found", bookingId));
+        }
+        int approvedForInterval = bookingsRepo.countApprovedBookingsForInterval(State.APPROVED_STATE,
+                booking.getFromDate(), booking.getTo());
+        if (approvedForInterval > 0) {
+            throw new InvalidBookingException(
+                    String.format("There is already an approved booking for interval %1$tF - %2$tF",
+                            booking.getFromDate(), booking.getTo()));
+        }
+        booking.reopen(accountService.getCurrentLoggedIn());
+        return bookingsRepo.save(booking);
     }
 
     @Transactional

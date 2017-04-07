@@ -2,40 +2,58 @@ package com.livemybike.shop.offers.booking;
 
 import com.livemybike.shop.offers.OffersService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
-@RequestMapping("/offers/{offerId}/bookings")
+@RequestMapping("/bookings")
 public class BookingController {
 
     @Autowired
     private BookingService bookingService;
 
     @Autowired
+    private BookingsRepo bookingsRepo;
+
+    @Autowired
     private OffersService offersService;
 
-    @RequestMapping(value = "", method = POST, produces = APPLICATION_JSON_VALUE)
-    public BookingDTO requestBooking(@RequestBody BookingDTO bookingDTO) throws InvalidBookingException {
-        Booking booking = bookingService.buildBooking(bookingDTO);
-        Booking storedBooking = bookingService.requestBooking(booking);
-        return new BookingDTO(storedBooking.getId(), storedBooking.getFromDate(), storedBooking.getTo(),
-                storedBooking.getRequestedBy().getId(), storedBooking.getOffer().getId());
+    @RequestMapping(value = "/{id}", method = GET, produces = APPLICATION_JSON_VALUE)
+    public BookingDTO getBooking(
+            @PathVariable(value = "id") long bookingId) {
+        Booking booking = bookingsRepo.findOne(bookingId);
+        return booking != null ?
+                new BookingDTO(booking.getId(), booking.getFromDate(), booking.getTo(),
+                        booking.getRequestedBy().getId(), booking.getOffer().getId())
+                : null;
     }
 
-    @RequestMapping(value = "", method = GET, produces = APPLICATION_JSON_VALUE)
-    public List<BookingDTO> readOfferBookings(
-            @PathVariable(value="offerId") long offerId) {
-        return offersService.getOfferBookings(offerId).stream()
-                .map(booking -> new BookingDTO(booking.getId(), booking.getFromDate(), booking.getTo(),
-                        booking.getRequestedBy().getId(), booking.getOffer().getId()))
-                .collect(Collectors.toList());
+    @RequestMapping(value = "/{id}/@approve", method = GET, produces = APPLICATION_JSON_VALUE)
+    public BookingDTO approveBooking(
+            @PathVariable(value = "id") long bookingId) throws InvalidBookingException, InvalidStateTransitionException {
+        Booking booking = bookingService.approveBooking(bookingId);
+        return new BookingDTO(booking.getId(), booking.getFromDate(), booking.getTo(),
+                booking.getRequestedBy().getId(), booking.getOffer().getId());
+    }
+
+    @RequestMapping(value = "/{id}/@cancel", method = GET, produces = APPLICATION_JSON_VALUE)
+    public BookingDTO cancelBooking(
+            @PathVariable(value = "id") long bookingId) throws InvalidBookingException, InvalidStateTransitionException {
+        Booking booking = bookingService.approveBooking(bookingId);
+        return new BookingDTO(booking.getId(), booking.getFromDate(), booking.getTo(),
+                booking.getRequestedBy().getId(), booking.getOffer().getId());
+    }
+
+    @RequestMapping(value = "/{id}/@reopen", method = GET, produces = APPLICATION_JSON_VALUE)
+    public BookingDTO reopenBooking(
+            @PathVariable(value = "id") long bookingId) throws InvalidBookingException, InvalidStateTransitionException {
+        Booking booking = bookingService.reopenBooking(bookingId);
+        return new BookingDTO(booking.getId(), booking.getFromDate(), booking.getTo(),
+                booking.getRequestedBy().getId(), booking.getOffer().getId());
     }
 
 }

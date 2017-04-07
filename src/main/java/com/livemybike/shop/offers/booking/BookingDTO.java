@@ -10,6 +10,8 @@ public class BookingDTO {
     private Long requestedById;
     private Long offerId;
 
+    public BookingDTO() {}
+
     public BookingDTO(Long id, Date fromDate, Date toDate, Long requestedById, Long offerId) {
         this.id = id;
         this.fromDate = fromDate;
