@@ -25,10 +25,14 @@ public class BookingService {
     @Autowired
     private AccountRepo accountRepo;
 
-    public Booking buildBooking(BookingDTO bookingDTO) {
-        Offer offer = offersRepo.findOne(bookingDTO.getOfferId());
-        Account requestedBy = accountService.getCurrentLoggedIn();
-        return new Booking(bookingDTO.getFromDate(), bookingDTO.getToDate(), offer, requestedBy);
+    public Booking buildBooking(BookingDTO bookingDTO) throws InvalidBookingException {
+        try {
+            Offer offer = offersRepo.findOne(bookingDTO.getOfferId());
+            Account requestedBy = accountService.getCurrentLoggedIn();
+            return new Booking(bookingDTO.getFromDate(), bookingDTO.getToDate(), offer, requestedBy);
+        } catch (IllegalArgumentException e) {
+            throw new InvalidBookingException(e.getMessage(), e);
+        }
     }
 
     @Transactional
