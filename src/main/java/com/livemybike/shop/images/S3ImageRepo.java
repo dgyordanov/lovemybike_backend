@@ -44,12 +44,10 @@ public class S3ImageRepo implements ImageRepo {
         meta.setContentType(image.getContentType());
         meta.setContentLength(image.getSize());
 
-        StringBuilder imageName = new StringBuilder();
-        imageName.append(offerId).append(image.getImageSize().getValue())
-                .append("_").append(image.getName());
-
+        String imageName = ImageUtil.buildImageName(
+                offerId, image.getImageSize().getValue(), image.getName());
         try {
-            amazonS3.putObject(s3Bucket, imageName.toString(), image.getImageInputStream(), meta);
+            amazonS3.putObject(s3Bucket, imageName, image.getImageInputStream(), meta);
         } catch (AmazonClientException e) {
             throw new ImageStoringException("Can not upload image to s3", e);
         }

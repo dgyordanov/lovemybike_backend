@@ -1,8 +1,6 @@
 package com.livemybike.shop.offers;
 
-import com.livemybike.shop.images.Image;
-import com.livemybike.shop.images.ImageRepo;
-import com.livemybike.shop.images.ImageStoringException;
+import com.livemybike.shop.images.*;
 import com.livemybike.shop.offers.booking.Booking;
 import com.livemybike.shop.security.Account;
 import com.livemybike.shop.security.AccountService;
@@ -136,7 +134,44 @@ public class OffersServiceImpl implements OffersService {
     private OfferDto convertToDto(Offer offer) {
         OfferDto result = modelMapper.map(offer, OfferDto.class);
         result.setOwner_id(offer.getOwner().getId());
+
+        result.setImage0_s(ImageRepo.BASE_IMAGE_URL.concat(smallImageName(offer, offer.getImage0())));
+        result.setImage0_m(ImageRepo.BASE_IMAGE_URL.concat(mediumImageName(offer, offer.getImage0())));
+
+        if (!StringUtils.isEmpty(offer.getImage1())) {
+            result.setImage1_s(ImageRepo.BASE_IMAGE_URL.concat(smallImageName(offer, offer.getImage1())));
+            result.setImage1_m(ImageRepo.BASE_IMAGE_URL.concat(mediumImageName(offer, offer.getImage1())));
+        }
+
+        if (!StringUtils.isEmpty(offer.getImage2())) {
+            result.setImage2_s(ImageRepo.BASE_IMAGE_URL.concat(smallImageName(offer, offer.getImage2())));
+            result.setImage2_m(ImageRepo.BASE_IMAGE_URL.concat(mediumImageName(offer, offer.getImage2())));
+        }
+
+        if (!StringUtils.isEmpty(offer.getImage3())) {
+            result.setImage3_s(ImageRepo.BASE_IMAGE_URL.concat(smallImageName(offer, offer.getImage3())));
+            result.setImage3_m(ImageRepo.BASE_IMAGE_URL.concat(mediumImageName(offer, offer.getImage3())));
+        }
+
+        if (!StringUtils.isEmpty(offer.getImage4())) {
+            result.setImage4_s(ImageRepo.BASE_IMAGE_URL.concat(smallImageName(offer, offer.getImage4())));
+            result.setImage4_m(ImageRepo.BASE_IMAGE_URL.concat(mediumImageName(offer, offer.getImage4())));
+        }
+
+        if (!StringUtils.isEmpty(offer.getImage5())) {
+            result.setImage5_s(ImageRepo.BASE_IMAGE_URL.concat(smallImageName(offer, offer.getImage5())));
+            result.setImage5_m(ImageRepo.BASE_IMAGE_URL.concat(mediumImageName(offer, offer.getImage5())));
+        }
+
         return result;
+    }
+
+    private String smallImageName(Offer offer, String imageName) {
+        return ImageUtil.buildImageName(offer.getId(), ImageSize.SMALL.getValue(), imageName);
+    }
+
+    private String mediumImageName(Offer offer, String imageName) {
+        return ImageUtil.buildImageName(offer.getId(), ImageSize.MEDIUM.getValue(), imageName);
     }
 
     private void storeImages(Long offerId, MultipartFile... images) {
