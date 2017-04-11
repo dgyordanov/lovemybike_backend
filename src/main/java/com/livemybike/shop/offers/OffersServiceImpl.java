@@ -131,6 +131,13 @@ public class OffersServiceImpl implements OffersService {
         return offer.getBookings();
     }
 
+    @Override
+    public OfferDto getOffer(long offerId) {
+        Offer offer = offersRepo.findOne(offerId);
+        return convertToDto(offer);
+    }
+
+
     private OfferDto convertToDto(Offer offer) {
         OfferDto result = modelMapper.map(offer, OfferDto.class);
         result.setOwner_id(offer.getOwner().getId());

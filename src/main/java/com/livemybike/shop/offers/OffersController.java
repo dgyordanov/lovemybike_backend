@@ -85,4 +85,10 @@ public class OffersController {
                 .collect(Collectors.toList());
     }
 
+    @RequestMapping(value = "/{id}", method = GET, produces = APPLICATION_JSON_VALUE)
+    public @ResponseBody OfferDto readOffer(
+            @PathVariable(value="id") long offerId) {
+        return offerService.getOffer(offerId);
+    }
+
 }

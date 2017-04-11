@@ -10,7 +10,7 @@ public interface OffersService {
 
     /**
      * Search offers by particular criteria
-     * 
+     *
      * @param genderFilter
      *            Concatenated desired gender chars
      * @param location
@@ -26,4 +26,6 @@ public interface OffersService {
     Page<OfferDto> listMyOffers(int pageNumber);
 
     List<Booking> getOfferBookings(long offerId);
+
+    OfferDto getOffer(long offerId);
 }
