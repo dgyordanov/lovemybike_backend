@@ -137,10 +137,10 @@ public class OffersServiceImpl implements OffersService {
         return convertToDto(offer);
     }
 
-
     private OfferDto convertToDto(Offer offer) {
         OfferDto result = modelMapper.map(offer, OfferDto.class);
         result.setOwner_id(offer.getOwner().getId());
+        result.setOwnerName(offer.getOwner().getName());
 
         result.setImage0_s(ImageRepo.BASE_IMAGE_URL.concat(smallImageName(offer, offer.getImage0())));
         result.setImage0_m(ImageRepo.BASE_IMAGE_URL.concat(mediumImageName(offer, offer.getImage0())));

@@ -29,4 +29,5 @@ public class OfferDto {
     private String number;
     private String postcode;
     private String city;
+    private String ownerName;
 }
