@@ -1,23 +1,23 @@
-id,account_id,price,title,image0,image1,image2,image3,image4,image5,description,gender,street,number,postcode,city
-1,1,14.99,Haibike big curve,picture_1.jpg,picture_2.jpg,picture_3.jpg,picture_4.jpg,picture_5.jpg,picture_6.jpg,Very comfortable well made lady bike,m,Breitkopfstrasse,75,13409,Berlin
-2,2,12.49,Diamant,picture_1.jpg,picture_2.jpg,picture_3.jpg,picture_4.jpg,picture_5.jpg,picture_6.jpg,The bike is in very good condition. A classical example of the company with 120 year history of making high quality bicycles.,w,Schützenstraße,17,40211,Düsseldorf
-3,3,11.99,Haibike big curve,picture_1.jpg,picture_2.jpg,picture_3.jpg,picture_4.jpg,picture_5.jpg,picture_6.jpg,Short description of this bike which should be at most this size 3-4 rows,w,Hartmannstraße,1,80333,Munich
-4,1,9.49,Haibike big curve,picture_1.jpg,picture_2.jpg,picture_3.jpg,picture_4.jpg,picture_5.jpg,picture_6.jpg,Short description of this bike which should be at most this size 3-4 rows,m,Mittelstraße,21,10117,Berlin
-5,2,12.99,Bianchi C-Sport 2.5,picture_1.jpg,,,,,, Bianchi Alloy 1.1/8" Disc.  Included w/Shifters. Kenda Eurotrek 700x32,m,Salvatorstraße,14,80333,Munich
-6,3,10.49,Haibike big curve,picture_1.jpg,picture_2.jpg,picture_3.jpg,picture_4.jpg,picture_5.jpg,picture_6.jpg,Short description of this bike which should be at most this size 3-4 rows,m,Zimmerstraße,55,10117,Berlin
-7,1,15.99,Haibike big curve,picture_1.jpg,picture_2.jpg,picture_3.jpg,picture_4.jpg,picture_5.jpg,picture_6.jpg,Short description of this bike which should be at most this size 3-4 rows,w,Börsenbrücke,8,20457,Hamburg
-8,2,8.49,Haibike big curve,picture_1.jpg,picture_2.jpg,picture_3.jpg,picture_4.jpg,picture_5.jpg,picture_6.jpg,Short description of this bike which should be at most this size 3-4 rows,m,Bissingzeile,17,10785,Berlin
-9,3,10.99,Haibike big curve,picture_1.jpg,picture_2.jpg,picture_3.jpg,picture_4.jpg,picture_5.jpg,picture_6.jpg,Short description of this bike which should be at most this size 3-4 rows,w,Schneckenhofstraße,31,60596,Frankfurt am Main
-10,1,11.49,Haibike big curve,picture_1.jpg,picture_2.jpg,picture_3.jpg,picture_4.jpg,picture_5.jpg,picture_6.jpg,Short description of this bike which should be at most this size 3-4 rows,w,Geisbergstraße,10,10777,Berlin
-11,2,12.99,Haibike big curve,picture_1.jpg,picture_2.jpg,picture_3.jpg,picture_4.jpg,picture_5.jpg,picture_6.jpg,Short description of this bike which should be at most this size 3-4 rows,m,Wurzerstraße,15,80539,Munich
-12,3,13.49,Haibike big curve,picture_1.jpg,picture_2.jpg,picture_3.jpg,picture_4.jpg,picture_5.jpg,picture_6.jpg,Short description of this bike which should be at most this size 3-4 rows,m,Schlüterstraße,68,10625,Berlin
-13,1,9.99,Haibike big curve,picture_1.jpg,picture_2.jpg,picture_3.jpg,picture_4.jpg,picture_5.jpg,picture_6.jpg,Short description of this bike which should be at most this size 3-4 rows,m,Knesebeckstraße,95,10623,Berlin
-14,2,8.49,Haibike big curve,picture_1.jpg,picture_2.jpg,picture_3.jpg,picture_4.jpg,picture_5.jpg,picture_6.jpg,Short description of this bike which should be at most this size 3-4 rows,w,Kattrepel,4,20095,Hamburg
-15,3,10.99,Haibike big curve,picture_1.jpg,picture_2.jpg,picture_3.jpg,picture_4.jpg,picture_5.jpg,picture_6.jpg,Short description of this bike which should be at most this size 3-4 rows,m,Paulstraße,23,10557,Berlin
-16,1,11.49,Haibike big curve,picture_1.jpg,picture_2.jpg,picture_3.jpg,picture_4.jpg,picture_5.jpg,picture_6.jpg,Short description of this bike which should be at most this size 3-4 rows,w,Textorstraße,67,60594,Frankfurt am Main
-17,2,17.99,Haibike big curve,picture_1.jpg,picture_2.jpg,picture_3.jpg,picture_4.jpg,picture_5.jpg,picture_6.jpg,Short description of this bike which should be at most this size 3-4 rows,w,Rathenower Str.,1,10559,Berlin
-18,3,9.49,Haibike big curve,picture_1.jpg,picture_2.jpg,picture_3.jpg,picture_4.jpg,picture_5.jpg,picture_6.jpg,Short description of this bike which should be at most this size 3-4 rows,m,Leibnizstraße,65,10625,Berlin
-19,1,18.99,Haibike big curve,picture_1.jpg,picture_2.jpg,picture_3.jpg,picture_4.jpg,picture_5.jpg,picture_6.jpg,Short description of this bike which should be at most this size 3-4 rows,m,Frauenstraße,20,80469,Munich
-20,2,12.49,Haibike big curve,picture_1.jpg,picture_2.jpg,picture_3.jpg,picture_4.jpg,picture_5.jpg,picture_6.jpg,Short description of this bike which should be at most this size 3-4 rows,m,Pestalozzistraße,88,10625,Berlin
-21,3,19.99,Redline Urbis,picture_1.jpg,picture_2.jpg,,,,,Unique Redline Urbis (single speed). Colour - Satin,u,Spaldingstraße,75,20097,Hamburg
-22,1,13.49,Bianchi Impulso S-Sport,picture_1.jpg,,,,,,Bianchi Full Carbon w/Kevlar Disc Brake 1.1/8". Avid BB5 mechanical disc brake. Post mount calipers.,m,Ferdinandstraße,56,20095,Hamburg
+id;account_id;price;title;image0;image1;image2;image3;image4;image5;description;gender;street;number;postcode;city
+1;1;14.99;Wilson;picture_1.jpg;picture_2.jpg;picture_3.jpg;;;;Handbuilt Wilson track bike;m;Breitkopfstrasse;75;13409;Berlin
+2;2;12.49;Diamant;picture_1.jpg;picture_2.jpg;picture_3.jpg;picture_4.jpg;picture_5.jpg;picture_6.jpg;The bike is in very good condition. A classical example of the company with 120 year history of making high quality bicycles.;w;Schützenstraße;17;40211;Düsseldorf
+3;3;11.99;BMX;picture_1.jpg;;;;;;Fork: Hi-Tensile Steel. Wheels: 36 spokes with black alloy rims 20".Freestyle Handle Bars and Stem;u;Hartmannstraße;1;80333;Munich
+4;1;9.49;Raleigh Steel wolf;picture_1.jpg;;;;;;20" alloy wheels. Grip shifter. 6 speed. V brakes;c;Mittelstraße;21;10117;Berlin
+5;2;12.99;Bianchi C-Sport 2.5;picture_1.jpg;;;;;; Bianchi Alloy 1.1/8" Disc.  Included w/Shifters. Kenda Eurotrek 700x32;m;Salvatorstraße;14;80333;Munich
+6;3;10.49;Single speed road bike;picture_1.jpg;;;;;;Weight: 9.8 Kg. Handle Bar: 52cm. Brake: Dual pivot forged alloy. Saddle: PU top with alloy rails. Rims: Deep section 50mm with double wall;m;Zimmerstraße;55;10117;Berlin
+7;1;15.99;Lincoln Corniche ladies mountain bike;picture_1.jpg;;;;;;18" ladies frame. 26x1.95 off road tyres. Grip shifters. 15 speeds;w;Börsenbrücke;8;20457;Hamburg
+8;2;8.49;Mistral ladies classic;picture_1.jpg;;;;;;Steel 20" ladies frame. 3 Speed sturmey Archer Gears. 26x1 3/8 wheels;w;Bissingzeile;17;10785;Berlin
+9;3;10.99;Single speed bike;picture_1.jpg;;;;;;Classical single speed bicycle in great condition;m;Schneckenhofstraße;31;60596;Frankfurt am Main
+10;1;11.49;2015 State Bicycle.Co 6061 Black Label Fixie/SS;picture_1.jpg;;;;;;SRAM power spline 68x113mm Fixie/Single Speed. Polyurethane with steel rails saddle;m;Geisbergstraße;10;10777;Berlin
+11;2;12.99;2015 Scott CR1 20 Carbon Fiber;picture_1.jpg;;;;;;Easton Aero Drop Handlebar (40cm), Oval M810 Carbon Composite Seatpost, Shimano RS-11 Wheelset, and Shimano Ultegra groupset (shifters, front and rear derailleur).;m;Wurzerstraße;15;80539;Munich
+12;3;13.49;2004 Gary Fisher Sugar 2+;picture_1.jpg;;;;;;Gary Fisher Sugar 2+ Full Suspension Mountain Bike. Includes original shock pump.;m;Schlüterstraße;68;10625;Berlin
+13;1;9.99;2012 Cannondale Cannondale Synapse Alloy 7 Sora;picture_1.jpg;;;;;;Size 56 Cannodale Synapse as new 28mm Panaracer Gravel King Tyres plus original schwalbe tyres.;m;Knesebeckstraße;95;10623;Berlin
+14;2;8.49;2016 SuperCycle 1600;picture_1.jpg;picture_2.jpg;picture_3.jpg;picture_4.jpg;picture_5.jpg;;Added lights, ringing bell and lock and key. Will be giving extra batteries.;m;Kattrepel;4;20095;Hamburg
+15;3;10.99;Peugeot PBS Course;picture_1.jpg;picture_2.jpg;picture_3.jpg;;;;A rare Peugot bike that has been built using multiple old quality bike. Any questions, please ask but is a great run around!;m;Paulstraße;23;10557;Berlin
+16;1;11.49;2015 Trek Emonda;picture_1.jpg;picture_2.jpg;picture_3.jpg;;;;Excellent condition,hardly used.;m;Textorstraße;67;60594;Frankfurt am Main
+17;2;17.99;2016 Carrera Banshee X;picture_1.jpg;picture_2.jpg;picture_3.jpg;;;;2016 . Bike still like new. Recently changed new gear, Chain and break pads. Bleeding, full serviced. Frame- 19" Wheels - 26" Tyre- New Continental Downhill Big Chunky 2.3".;m;Rathenower Str.;1;10559;Berlin
+18;3;9.49;2015 Trek Émonda S 5;picture_1.jpg;;;;;;56cm / 22", Carbon Fiber Frame.  It comes with pearl white CARBON frame (56cm), practical Shimano 105 11x2 groupset, durable Bontrager 700C wheels, rear and front lamps.;m;Leibnizstraße;65;10625;Berlin
+19;1;18.99;H. Deleau Vintage bike;picture_1.jpg;picture_2.jpg;picture_3.jpg;;;;Fully refurbished Vintage 1960s H. Deleau bike, hand-built, lugged, steel frame. 56cm square. 27 inch wheels. 3 gears. Fantastic bike for cruising around town and country.;m;Frauenstraße;20;80469;Munich
+20;2;12.49;Cannondale Synapse Alloy/Carbon Shimano 105 Disc;picture_1.jpg;picture_2.jpg;picture_3.jpg;;;;Barely ridden, in excellent mechanical condition.;m;Pestalozzistraße;88;10625;Berlin
+21;3;19.99;Redline Urbis;picture_1.jpg;picture_2.jpg;;;;;Unique Redline Urbis (single speed). Colour - Satin;u;Spaldingstraße;75;20097;Hamburg
+22;1;13.49;Bianchi Impulso S-Sport;picture_1.jpg;;;;;;Bianchi Full Carbon w/Kevlar Disc Brake 1.1/8". Avid BB5 mechanical disc brake. Post mount calipers.;m;Ferdinandstraße;56;20095;Hamburg

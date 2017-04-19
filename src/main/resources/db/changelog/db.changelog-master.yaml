@@ -89,6 +89,7 @@ databaseChangeLog:
               encoding: UTF-8
               file: db/offers.csv
               tableName: offers
+              separator: ;
               columns:
                   - column:
                       name: id
