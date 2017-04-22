@@ -97,7 +97,7 @@ public class OffersController {
     public @ResponseBody List<Date> readOfferBookedDays(
             @PathVariable(value="id") long offerId,
             @RequestParam(value="startInterval") @DateTimeFormat(pattern="yyyy-MM-dd") Date startInterval,
-            @PathVariable(value="endInterval") @DateTimeFormat(pattern="yyyy-MM-dd") Date endInterval) {
+            @RequestParam(value="endInterval") @DateTimeFormat(pattern="yyyy-MM-dd") Date endInterval) {
         return offerService.getBookedDaysForInterval(offerId, startInterval, endInterval);
     }
 
