@@ -24,8 +24,8 @@ public class BookingRESTApiTest extends AbstractBookingTest {
 
     private static final String USERNAME1 = "dido@dido.com";
     private static final String PASSWORD1 = "dido";
-    private static final String USERNAME2 = "petyo@petyo.com";
-    private static final String PASSWORD2 = "petyo";
+    private static final String USERNAME2 = "peter@peter.com";
+    private static final String PASSWORD2 = "peter";
     private static final String USERNAME3 = "viki@viki.com";
     private static final String PASSWORD3 = "viki";
 

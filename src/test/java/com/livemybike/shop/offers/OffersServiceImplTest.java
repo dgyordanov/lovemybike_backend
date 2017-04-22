@@ -183,7 +183,7 @@ public class OffersServiceImplTest {
         Date endInterval = calendar.getTime();
         List<Date> result = offersService.getBookedDaysForInterval(1L, startInterval, endInterval);
 
-        assertThat(result, hasItem(startInterval));
+        assertThat(result, hasItem(DateUtil.getBeginningOfDay(startInterval)));
         assertThat(result, not(hasItem(from)));
 
     }
