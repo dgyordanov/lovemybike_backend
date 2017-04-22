@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class DateUtil {
 
-    public static Date today(){
+    public static Date today() {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.AM_PM, Calendar.AM);
         cal.set(Calendar.HOUR, 0);
@@ -39,6 +39,14 @@ public class DateUtil {
 
         return cal.getTime();
 
+    }
+
+    public static Date getEarly(Date date1, Date date2) {
+        return date1.before(date2) ? date1 : date2;
+    }
+
+    public static Date getLate(Date date1, Date date2) {
+        return date1.after(date2) ? date1 : date2;
     }
 
 }

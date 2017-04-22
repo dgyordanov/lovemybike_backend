@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class BookingService {
@@ -110,4 +112,8 @@ public class BookingService {
         return booking;
     }
 
+    public List<Booking> findApprovedBookingByOfferInInterval(Offer offer, Date startDate, Date endDate) {
+        return bookingsRepo.findBookingsByOfferInInterval(State.APPROVED_STATE, offer, startDate, endDate);
+
+    }
 }

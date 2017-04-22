@@ -4,6 +4,7 @@ import com.livemybike.shop.offers.booking.Booking;
 import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.List;
 
 public interface OffersService {
@@ -28,4 +29,6 @@ public interface OffersService {
     List<Booking> getOfferBookings(long offerId);
 
     OfferDto getOffer(long offerId);
+
+    List<Date> getBookedDaysForInterval(Long offerId, Date startDate, Date endDate);
 }

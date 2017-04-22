@@ -2,9 +2,12 @@ package com.livemybike.shop.offers;
 
 import com.livemybike.shop.images.*;
 import com.livemybike.shop.offers.booking.Booking;
+import com.livemybike.shop.offers.booking.BookingService;
 import com.livemybike.shop.security.Account;
 import com.livemybike.shop.security.AccountService;
 import com.livemybike.shop.security.AuthorizationException;
+import com.livemybike.shop.util.DateUtil;
+import org.apache.commons.lang.Validate;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,8 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,6 +39,9 @@ public class OffersServiceImpl implements OffersService {
 
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private BookingService bookingService;
 
     @Override
     public Page<OfferDto> listOffers(String genderFilter, String location, int pageNumber) {
@@ -135,6 +140,29 @@ public class OffersServiceImpl implements OffersService {
     public OfferDto getOffer(long offerId) {
         Offer offer = offersRepo.findOne(offerId);
         return convertToDto(offer);
+    }
+
+    public List<Date> getBookedDaysForInterval(Long offerId, Date startDate, Date endDate) {
+        Offer offer = offersRepo.findOne(offerId);
+        Validate.notNull(offer, String.format("Offer with ID: %d not found", offerId));
+        Validate.notNull(startDate,"startDate can not be null");
+        Validate.notNull(endDate, "endDate can not be null");
+
+        List<Booking> bookings = bookingService.findApprovedBookingByOfferInInterval(offer, startDate, endDate);
+
+        List<Date> result = new ArrayList<>();
+        Calendar cal = Calendar.getInstance();
+        bookings.forEach(booking -> {
+            Date startIntervalDate = DateUtil.getBeginningOfDay(DateUtil.getLate(booking.getFromDate(), startDate));
+            Date endIntervalDate = DateUtil.getEndOfDay(DateUtil.getEarly(booking.getTo(), endDate));
+            while (startIntervalDate.before(endIntervalDate)) {
+                result.add(startIntervalDate);
+                cal.setTime(startIntervalDate);
+                cal.add(Calendar.DATE, 1);
+                startIntervalDate = cal.getTime();
+            }
+        });
+        return result;
     }
 
     private OfferDto convertToDto(Offer offer) {

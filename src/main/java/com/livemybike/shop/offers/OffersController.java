@@ -10,9 +10,11 @@ import com.livemybike.shop.offers.booking.BookingService;
 import com.livemybike.shop.offers.booking.InvalidBookingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -89,6 +91,14 @@ public class OffersController {
     public @ResponseBody OfferDto readOffer(
             @PathVariable(value="id") long offerId) {
         return offerService.getOffer(offerId);
+    }
+
+    @RequestMapping(value = "/{id}/bookedDays", method = GET, produces = APPLICATION_JSON_VALUE)
+    public @ResponseBody List<Date> readOfferBookedDays(
+            @PathVariable(value="id") long offerId,
+            @RequestParam(value="startInterval") @DateTimeFormat(pattern="yyyy-MM-dd") Date startInterval,
+            @PathVariable(value="endInterval") @DateTimeFormat(pattern="yyyy-MM-dd") Date endInterval) {
+        return offerService.getBookedDaysForInterval(offerId, startInterval, endInterval);
     }
 
 }
