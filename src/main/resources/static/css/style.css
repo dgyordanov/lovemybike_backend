@@ -71,3 +71,13 @@ div.required label.control-label:after {
 .underline {
     text-decoration: underline;
 }
+
+.carousel-inner{
+  width:100%;
+  max-width:800px;
+  max-height:600px;
+}
+
+.rdr-SpecialDay{
+    background-color: #2DA23A;
+}
