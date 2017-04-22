@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "4468f1402ed1f37c6af4"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b276fb6f06a77f679b9c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -8426,6 +8426,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	// For dev purposes
+	// const baseUrl = 'http://localhost:9000/';
 	var baseUrl = '/';
 	
 	var setVisibilityFilter = exports.setVisibilityFilter = function setVisibilityFilter(filter) {
@@ -49556,6 +49557,8 @@
 	          ),
 	          _react2.default.createElement(_reduxForm.Field, { name: 'email', component: _inputField2.default,
 	            type: 'text', label: 'Email', required: 'required' }),
+	          _react2.default.createElement(_reduxForm.Field, { name: 'name', component: _inputField2.default,
+	            type: 'text', label: 'Name', required: 'required' }),
 	          _react2.default.createElement(_reduxForm.Field, { name: 'password', component: _inputField2.default,
 	            type: 'password', label: 'Password', required: 'required' }),
 	          _react2.default.createElement(
@@ -49582,6 +49585,10 @@
 	
 	  if (!(0, _formValidators.validEmail)(formProps.email)) {
 	    errors.email = 'Invalid email';
+	  }
+	
+	  if (!formProps.name) {
+	    errors.name = 'Please enter a name';
 	  }
 	
 	  if (!formProps.password) {
